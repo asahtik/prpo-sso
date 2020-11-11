@@ -1,0 +1,10 @@
+kumuluzee:
+  name: sso
+  version: 1.0.0
+  env:
+    name: dev
+  datasources:
+    - jndi-name: jdbc/Simple_JPA
+      connection-url: jdbc:postgresql://localhost:5432/PRPO_JPA
+      username: postgres
+      password: postgres
