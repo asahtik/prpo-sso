@@ -1,11 +1,8 @@
-Sledilnik števila obiskovalcev
+Upravljanje s prijavami na termine govorilnih ur
 ===
-Aplikacija služi kot pripomoček za sledenje števila oseb v zaprtih prostorih ter za kreiranje statistike in
-poročil o trendih zasedenosti. Aplikacija ponuja vmesnik, s katerim lahko zaposleni ročno beležijo
-vstope in izstope, pri čemer lahko beleženje poteka na več vhodih hkrati. Določen uporabnik (pravna
-oseba) ima enega ali več prostorov, vsak prostor pa ima enega ali več vhodov. Vsak prostor ima
-določeno velikost. Aplikacija omogoča vnos omejitve števila obiskovalcev na kvadratni meter, na
-podlagi katere se izračuna dovoljeno število obiskovalcev v prostoru. Aplikacija hrani trenutno
-zasedenost ter zgodovino zasedenosti, iz katere je možno generirati trende in poročila. Prva
-mikrostoritev naj skrbi za trenutno zasedenost prostorov, druga pa naj hrani zgodovino zasedenosti
-in generira poročila.
+Aplikacija služi kot posrednik med profesorji in študenti. Profesorjem omogoča, da razpišejo termine
+za govorilne ure, študentje pa se lahko na posamezne termine prijavljajo. Profesor lahko za
+posamezen termin določi tudi maksimalno število prisotnih študentov, s čimer so omogočene tudi
+skupinske konzultacije. Da je prijava na termin veljavna, jo mora profesor potrditi. Prva mikrostoritev
+naj skrbi za katalog razpisanih terminov in prijav, druga pa za upravljanje z razpoložljivimi
+komunikacijskimi kanali (npr. Zoom, Google Meet ...).
