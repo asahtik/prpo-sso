@@ -8,3 +8,4 @@ kumuluzee:
       connection-url: jdbc:postgresql://localhost:5432/PRPO_JPA
       username: postgres
       password: postgres
+

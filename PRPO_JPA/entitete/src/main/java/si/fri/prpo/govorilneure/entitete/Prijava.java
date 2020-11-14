@@ -20,23 +20,23 @@ public class Prijava {
     @Column
     private String datum;
     @Column
-    private Boolean potrjena;
+    private Boolean potrjena = false;
     @Column
     private String email;
 
     @ManyToOne
-    @JoinColumn(name = "termini_id")
-    private Termini termin;
+    @JoinColumn(name = "termin_id")
+    private Termin termin;
 
     @ManyToOne
     @JoinColumn(name = "student_id")
     private Student student;
 
-    public Termini getTermin() {
+    public Termin getTermin() {
         return termin;
     }
 
-    public void setTermin(Termini termin) {
+    public void setTermin(Termin termin) {
         this.termin = termin;
     }
 

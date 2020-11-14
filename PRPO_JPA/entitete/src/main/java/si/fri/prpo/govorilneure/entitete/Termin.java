@@ -5,12 +5,13 @@ import java.util.List;
 @Entity
 @NamedQueries(value =
         {
-                @NamedQuery(name = "Termini.getAll", query = "SELECT t FROM Termini t"),
-                @NamedQuery(name = "Termini.getByUra", query = "SELECT t FROM Termini t WHERE t.ura = :ura"),
-                @NamedQuery(name = "Termini.getByDatum", query = "SELECT t FROM Termini t WHERE t.datum = :datum"),
-                @NamedQuery(name = "Termini.getAllLocation", query = "SELECT t.location FROM Termini t")
+                @NamedQuery(name = "Termin.getAll", query = "SELECT t FROM Termin t"),
+                @NamedQuery(name = "Termin.getById", query = "SELECT t FROM Termin t WHERE t.id = :id"),
+                @NamedQuery(name = "Termin.getByUra", query = "SELECT t FROM Termin t WHERE t.ura = :ura"),
+                @NamedQuery(name = "Termin.getByDatum", query = "SELECT t FROM Termin t WHERE t.datum = :datum"),
+                @NamedQuery(name = "Termin.getAllLocations", query = "SELECT t.location FROM Termin t")
         })
-public class Termini {
+public class Termin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

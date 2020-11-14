@@ -6,7 +6,7 @@
         <class>si.fri.prpo.govorilneure.entitete.Student</class>
         <class>si.fri.prpo.govorilneure.entitete.Profesor</class>
         <class>si.fri.prpo.govorilneure.entitete.Prijava</class>
-        <class>si.fri.prpo.govorilneure.entitete.Termini</class>
+        <class>si.fri.prpo.govorilneure.entitete.Termin</class>
 
 
         <properties>

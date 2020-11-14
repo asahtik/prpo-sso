@@ -24,7 +24,7 @@ public class Profesor {
     private String email;
 
     @OneToMany(mappedBy = "profesor", cascade = CascadeType.ALL)
-    private List<Termini> termini;
+    private List<Termin> termini;
 
 
     public Integer getId() {
@@ -35,11 +35,11 @@ public class Profesor {
         this.id = id;
     }
 
-    public List<Termini> getTermini() {
+    public List<Termin> getTermin() {
         return termini;
     }
 
-    public void setTermini(List<Termini> termini) {
+    public void setTermini(List<Termin> termini) {
         this.termini = termini;
     }
 
