@@ -33,7 +33,7 @@ public class Profesor {
         this.id = id;
     }
 
-    public List<Termin> getTermin() {
+    public List<Termin> getTermini() {
         return termini;
     }
 

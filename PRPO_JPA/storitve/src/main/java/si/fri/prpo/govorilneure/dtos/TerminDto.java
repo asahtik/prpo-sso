@@ -2,6 +2,7 @@ package si.fri.prpo.govorilneure.dtos;
 
 public class TerminDto {
 
+    private int id;
     private String ura;
     private String datum;
     private int maxSt;
@@ -46,5 +47,13 @@ public class TerminDto {
 
     public void setProfesor_id(int profesor_id) {
         this.profesor_id = profesor_id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

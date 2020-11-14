@@ -64,7 +64,7 @@ public class ProfesorZrno {
     }
 
     // DELETE
-    public boolean delete(int idProfesorja) {
+    public boolean remove(int idProfesorja) {
         Profesor rm = getById(idProfesorja);
         if(rm != null) {
             em.remove(rm);
