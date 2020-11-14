@@ -7,9 +7,7 @@ import java.util.List;
 @NamedQueries(value =
         {
                 @NamedQuery(name = "Profesor.getAll", query = "SELECT p FROM Profesor p"),
-                @NamedQuery(name = "Profesor.getByProfesorIme", query = "SELECT p FROM Profesor p WHERE p.ime = :ime"),
-                @NamedQuery(name = "Profesor.getByProfesorPriimek", query = "SELECT p FROM Profesor p WHERE p.ime = :ime"),
-                @NamedQuery(name = "Profesor.getAllIme", query = "SELECT p.ime FROM Profesor p")
+                @NamedQuery(name = "Profesor.getByImePriimek", query = "SELECT p FROM Profesor p WHERE p.ime = :ime AND p.priimek = :priimek")
         })
 
 public class Profesor {
