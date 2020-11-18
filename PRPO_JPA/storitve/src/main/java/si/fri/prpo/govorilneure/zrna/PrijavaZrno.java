@@ -1,12 +1,11 @@
 package si.fri.prpo.govorilneure.zrna;
-
-import si.fri.prpo.govorilneure.entitete.Profesor;
+import si.fri.prpo.govorilneure.entitete.Prijava;
 import si.fri.prpo.govorilneure.entitete.Termin;
+import si.fri.prpo.govorilneure.entitete.Student;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -15,44 +14,37 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
 
-//@RequestScoped
 @ApplicationScoped
-public class ProfesorZrno {
+public class PrijavaZrno {
 
-    private static final Logger log = Logger.getLogger(ProfesorZrno.class.getName());
+    private static final Logger log = Logger.getLogger(PrijavaZrno.class.getName());
 
     UUID uuid = UUID.randomUUID(); // For demonstrational purposes
 
     @PostConstruct
     private void postConstruct() {
-        log.info("Created "+ProfesorZrno.class.getName()+" instance with UUID "+ uuid.toString());
+        log.info("Created "+PrijavaZrno.class.getName()+" instance with UUID "+ uuid.toString());
     }
     @PreDestroy
     private void preDestroy() {
-        log.info("Destroyed "+ProfesorZrno.class.getName()+" instance!");
+        log.info("Destroyed "+PrijavaZrno.class.getName()+" instance!");
     }
 
     @PersistenceContext(unitName = "sledilnik-sestankov-jpa")
     private EntityManager em;
 
     // GET
-    public List<Profesor> getAll() {
-        return (List<Profesor>)em.createNamedQuery("Profesor.getAll").getResultList();
+    public List<Prijava> getAll() {
+        return (List<Prijava>)em.createNamedQuery("Prijava.getAll").getResultList();
     }
 
-    public List<Profesor> getByImePriimek(String ime, String priimek) {
-        Query q = em.createNamedQuery("Profesor.getByImePriimek");
-        q.setParameter("ime", ime); q.setParameter("priimek", priimek);
-        return (List<Profesor>)q.getResultList();
-    }
-
-    public Profesor getById(int id) {
-        return em.find(Profesor.class, id);
+    public Prijava getById(int id) {
+        return em.find(Prijava.class, id);
     }
 
     // POST
     @Transactional
-    public Profesor add(Profesor p) {
+    public Prijava add(Prijava p) {
         if(p != null)
             em.persist(p);
         return p;
@@ -60,8 +52,8 @@ public class ProfesorZrno {
 
     // PUT
     @Transactional
-    public Profesor update(int idProfesorja, Profesor p) {
-        Profesor update = getById(idProfesorja);
+    public Prijava update(int idPrijava, Prijava p) {
+        Prijava update = getById(idPrijava);
         if(update == null) return null;
         p.setId(update.getId());
         em.merge(p);
@@ -70,8 +62,8 @@ public class ProfesorZrno {
 
     // DELETE
     @Transactional
-    public boolean delete(int idProfesorja) {
-        Profesor rm = getById(idProfesorja);
+    public boolean delete(int idPrijava) {
+        Prijava rm = getById(idPrijava);
         if(rm != null) {
             em.remove(rm);
             return true;

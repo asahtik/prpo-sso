@@ -25,11 +25,11 @@ public class Termin {
     @Column
     private String location;
 
-   @ManyToOne
-   @JoinColumn(name = "profesor_id")
-   private Profesor profesor;
+    @ManyToOne
+    @JoinColumn(name = "profesor_id")
+    private Profesor profesor;
 
-   @OneToMany(mappedBy = "termin")
+    @OneToMany(mappedBy = "termin", cascade = CascadeType.ALL)
     private List<Prijava> prijave;
 
     public Integer getId() {
@@ -89,6 +89,17 @@ public class Termin {
         this.profesor = profesor;
     }
 
-
+    @Override
+    public String toString() {
+        return "Termin{" +
+                "id=" + id +
+                ", datum='" + datum + '\'' +
+                ", ura='" + ura + '\'' +
+                ", maxSt=" + maxSt +
+                ", location='" + location + '\'' +
+                ", profesor=" + profesor +
+                ", prijave=" + prijave +
+                '}';
+    }
 }
 

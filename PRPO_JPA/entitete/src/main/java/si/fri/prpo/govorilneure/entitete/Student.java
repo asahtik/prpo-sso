@@ -26,7 +26,7 @@ public class Student {
     @Column
     private Integer stizkaznice;
 
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private List<Prijava> prijave;
 
 

@@ -9,6 +9,31 @@ public class TerminDto {
     private String lokacija;
     private int profesor_id;
 
+    public TerminDto(int id, String ura, String datum, int maxSt, String lokacija, int profesor_id) {
+        this.id = id;
+        this.ura = ura;
+        this.datum = datum;
+        this.maxSt = maxSt;
+        this.lokacija = lokacija;
+        this.profesor_id = profesor_id;
+    }
+
+    public TerminDto(String ura, String datum, int maxSt, String lokacija, int profesor_id) {
+        this.ura = ura;
+        this.datum = datum;
+        this.maxSt = maxSt;
+        this.lokacija = lokacija;
+        this.profesor_id = profesor_id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getUra() {
         return ura;
     }
@@ -47,13 +72,5 @@ public class TerminDto {
 
     public void setProfesor_id(int profesor_id) {
         this.profesor_id = profesor_id;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 }

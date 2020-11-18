@@ -1,8 +1,12 @@
 package si.fri.prpo.govorilneure.zrna;
 
+import si.fri.prpo.govorilneure.dtos.PrijavaDto;
 import si.fri.prpo.govorilneure.dtos.ProfesorDto;
+import si.fri.prpo.govorilneure.dtos.StudentDto;
 import si.fri.prpo.govorilneure.dtos.TerminDto;
+import si.fri.prpo.govorilneure.entitete.Prijava;
 import si.fri.prpo.govorilneure.entitete.Profesor;
+import si.fri.prpo.govorilneure.entitete.Student;
 import si.fri.prpo.govorilneure.entitete.Termin;
 
 import javax.annotation.PostConstruct;
@@ -33,6 +37,10 @@ public class UpravljanjeSestankovZrno {
     private ProfesorZrno prof;
     @Inject
     private TerminZrno term;
+    @Inject
+    private StudentZrno stud;
+    @Inject
+    private PrijavaZrno prij;
 
     @Transactional
     public Profesor dodajProfesorja(ProfesorDto profdto) {
@@ -57,60 +65,36 @@ public class UpravljanjeSestankovZrno {
         return prof.add(p);
     }
 
-    @Transactional
-    public Profesor posodobiProfesorja(ProfesorDto profdto) {
-        // id obvezen
-        profdto.setIme(profdto.getIme().trim());
-        profdto.setPriimek(profdto.getPriimek().trim());
-        if(profdto.getIme() == "") profdto.setIme(null);
-        if(profdto.getPriimek() == "") profdto.setPriimek(null);
+    public Student dodajStudenta(StudentDto studdto) {
+        // Ime in priimek obvezna
+        studdto.setIme(studdto.getIme().trim());
+        studdto.setPriimek(studdto.getPriimek().trim());
 
-        if(profdto.getEmail() != null) {
-            Pattern pattern = Pattern.compile("^.+@.+\\..+$", Pattern.CASE_INSENSITIVE);
-            Matcher matcher = pattern.matcher(profdto.getEmail());
-            if (!matcher.find()) profdto.setEmail(null);
-        }
-
-        Profesor old = prof.getById(profdto.getId());
-        if(old == null) {
-            log.warning("Podosobi: Profesor z id = "+profdto.getId()+" ne obstaja!");
+        if(studdto.getIme() == null || studdto.getIme() == "" || studdto.getPriimek() == null || studdto.getPriimek() == "") {
+            log.warning("Ne morem ustvariti studenta brez imena in priimka!");
             return null;
         }
-
-        Profesor n = new Profesor();
-        if(n.getIme() == null) n.setIme(old.getIme());
-        if(n.getPriimek() == null) n.setPriimek(old.getPriimek());
-        if(n.getEmail() == null) n.setEmail(old.getEmail());
-        n.setTermini(old.getTermini());
-        return prof.update(profdto.getId(), n);
-    }
-
-    @Transactional
-    public boolean odstraniProfesorja(ProfesorDto profdto) {
-        if(!prof.remove(profdto.getId())) {
-            log.warning("Odstrani: Profesor z id = "+profdto.getId()+" ne obstaja!");
-            return false;
+        if((int)(Math.log10(studdto.getStIzkaznice())+1)!=8) {
+            log.warning("Ne morem ustvariti studenta brez ustrezne stevilke izkaznice!");
+            return null;
         }
-        return true;
+        if(studdto.getEmail() != null) {
+            Pattern pattern = Pattern.compile("^.+@.+\\..+$", Pattern.CASE_INSENSITIVE);
+            Matcher matcher = pattern.matcher(studdto.getEmail());
+            if (!matcher.find()) studdto.setEmail(null);
+        }
+
+        Student s = new Student();
+        s.setIme(studdto.getIme());
+        s.setPriimek(studdto.getPriimek());
+        s.setEmail(studdto.getEmail());
+        return stud.add(s);
     }
+
 
     @Transactional
     public Termin dodajTermin(TerminDto termdto) {
         // Ura obvezna (hh:mm), datum obvezen (yyyy-mm-dd), veljaven profesor id obvezen
-        Pattern pattern;
-        Matcher matcher;
-        pattern = Pattern.compile("^[0-9]{2}(/|:|-)[0-9]{2}$");
-        matcher = pattern.matcher(termdto.getUra());
-        if(!matcher.find()) {
-            log.warning("Ura termina je v neveljavnem formatu!");
-            return null;
-        }
-        pattern = Pattern.compile("^[0-9]{4}(/|:|-|\\.)[0-9]{2}(/|:|-)[0-9]{2}$");
-        matcher = pattern.matcher(termdto.getUra());
-        if(!matcher.find()) {
-            log.warning("Datum termina je v neveljavnem formatu!");
-            return null;
-        }
         Profesor p;
         if((p = prof.getById(termdto.getProfesor_id())) == null) {
             log.warning("Id profesorja neveljaven!");
@@ -123,52 +107,56 @@ public class UpravljanjeSestankovZrno {
         t.setLocation(termdto.getLokacija());
         t.setProfesor(p);
         t = term.add(t);
-        p.getTermini().add(t);
+        p.getTermin().add(t);
         return t;
     }
 
     @Transactional
-    public Termin posodobiTermin(TerminDto termdto) {
-        // id obvezen
-        termdto.setUra(termdto.getUra().trim());
-        termdto.setDatum(termdto.getDatum().trim());
-        termdto.setLokacija(termdto.getLokacija().trim());
-        if(termdto.getUra() == "") termdto.setUra(null);
-        if(termdto.getDatum() == "") termdto.setDatum(null);
-        if(termdto.getLokacija() == "") termdto.setLokacija(null);
+    public Prijava dodajPrijavo(PrijavaDto prijDto){
 
-        Pattern pattern;
-        Matcher matcher;
-        if(termdto.getUra() != null) {
-            pattern = Pattern.compile("^[0-9]{2}(/|:|-)[0-9]{2}$");
-            matcher = pattern.matcher(termdto.getUra());
-            if(!matcher.find()) termdto.setUra(null);
+        //dto prijDto je za studenta in prijavo
+        Student student;
+        Termin termin;
+        if((student = stud.getById(prijDto.getStudentId())) == null) {
+            log.warning("Id studenta neveljaven!");
+            return null;
         }
-        if(termdto.getDatum() != null) {
-            pattern = Pattern.compile("^[0-9]{2}(/|:|-)[0-9]{2}$");
-            matcher = pattern.matcher(termdto.getDatum());
-            if(!matcher.find()) termdto.setDatum(null);
-        }
-
-        Termin old = term.getById(termdto.getId());
-        if(old == null) {
-            log.warning("Podosobi: Termin z id = "+termdto.getId()+" ne obstaja!");
+        if((termin = term.getById(prijDto.getTerminId())) == null) {
+            log.warning("Id termina neveljaven!");
             return null;
         }
 
-        Termin n = new Termin();
-        if(n.getUra() == null) n.setUra(old.getUra());
-        if(n.getDatum() == null) n.setDatum(old.getDatum());
-        if(n.getLocation() == null) n.setLocation(old.getLocation());
-        return term.update(termdto.getId(), n);
+        //potrjena ne nastavim ker je ze v Prijava nastavljen na false
+        Prijava prijava = new Prijava();
+        prijava.setStudent(student);
+        prijava.setTermin(termin);
+        prijava.setDatum(prijDto.getDatum());
+        prijava.setEmail(prijDto.getEmail());
+        prijava = prij.add(prijava);
+        student.getPrijave().add(prijava);
+        termin.getPrijave().add(prijava);
+        return prijava;
     }
 
     @Transactional
-    public boolean odstraniTermin(TerminDto termdto) {
-        if(!term.remove(termdto.getId())) {
-            log.warning("Odstrani: Termin z id = "+termdto.getId()+" ne obstaja!");
-            return false;
+    public Prijava potrdiPrijavo(PrijavaDto prijDto){
+        //ali prijava obstaja
+        Prijava prijava = prij.getById(prijDto.getId());
+
+        if(prijava == null){
+            log.info("Id prijave neveljaven!");
+            return null;
         }
-        return true;
+
+        else if(prijava.getPotrjena() == true){
+            log.info("Prijava je ze potrjena!");
+            //return null;
+        }
+
+        else {
+            prijava.setPotrjena(true);
+        }
+
+        return prij.update(prijava.getId(), prijava);
     }
 }

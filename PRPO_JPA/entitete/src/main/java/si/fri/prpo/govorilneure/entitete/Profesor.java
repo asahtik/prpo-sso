@@ -24,7 +24,6 @@ public class Profesor {
     @OneToMany(mappedBy = "profesor", cascade = CascadeType.ALL)
     private List<Termin> termini;
 
-
     public Integer getId() {
         return id;
     }
@@ -33,7 +32,7 @@ public class Profesor {
         this.id = id;
     }
 
-    public List<Termin> getTermini() {
+    public List<Termin> getTermin() {
         return termini;
     }
 
@@ -64,7 +63,5 @@ public class Profesor {
     public void setIme(String ime) {
         this.ime = ime;
     }
-
-
 
 }
