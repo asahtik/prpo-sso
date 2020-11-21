@@ -14,6 +14,8 @@ import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import java.sql.Timestamp;
+import java.util.List;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -42,6 +44,38 @@ public class UpravljanjeSestankovZrno {
     @Inject
     private PrijavaZrno prij;
 
+    public List<Student> vrniStudente() {
+        return stud.getAll();
+    }
+
+    public Student vrniStudenta(int id) {
+        return stud.getById(id);
+    }
+
+    public List<Profesor> vrniProfesorje() {
+        return prof.getAll();
+    }
+
+    public Profesor vrniProfesorja(int id) {
+        return prof.getById(id);
+    }
+
+    public List<Termin> vrniTermine() {
+        return term.getAll();
+    }
+
+    public Termin vrniTermin(int id) {
+        return term.getById(id);
+    }
+
+    public List<Prijava> vrniPrijave() {
+        return prij.getAll();
+    }
+
+    public Prijava vrniPrijavo(int id) {
+        return prij.getById(id);
+    }
+
     @Transactional
     public Profesor dodajProfesorja(ProfesorDto profdto) {
         // Ime in priimek obvezna
@@ -65,6 +99,14 @@ public class UpravljanjeSestankovZrno {
         return prof.add(p);
     }
 
+    public List<Termin> vrniTermineProfesorja(int id) {
+        Profesor p = vrniProfesorja(id);
+        if(p == null) return null;
+        else if(p.getTermini().size() == 0) return null;
+        else return p.getTermini();
+    }
+
+    @Transactional
     public Student dodajStudenta(StudentDto studdto) {
         // Ime in priimek obvezna
         studdto.setIme(studdto.getIme().trim());
@@ -91,6 +133,13 @@ public class UpravljanjeSestankovZrno {
         return stud.add(s);
     }
 
+    public List<Prijava> vrniPrijaveStudenta(int id) {
+        Student s = vrniStudenta(id);
+        if(s == null) return null;
+        else if(s.getPrijave().size() == 0) return null;
+        else return s.getPrijave();
+    }
+
 
     @Transactional
     public Termin dodajTermin(TerminDto termdto) {
@@ -101,13 +150,12 @@ public class UpravljanjeSestankovZrno {
             return null;
         }
         Termin t = new Termin();
-        t.setUra(termdto.getUra());
-        t.setDatum(termdto.getDatum());
+        t.setTimestamp(new Timestamp(termdto.getTime()));
         t.setMaxSt(termdto.getMaxSt());
         t.setLocation(termdto.getLokacija());
         t.setProfesor(p);
         t = term.add(t);
-        p.getTermin().add(t);
+        p.getTermini().add(t);
         return t;
     }
 
@@ -130,7 +178,7 @@ public class UpravljanjeSestankovZrno {
         Prijava prijava = new Prijava();
         prijava.setStudent(student);
         prijava.setTermin(termin);
-        prijava.setDatum(prijDto.getDatum());
+        prijava.setTimestamp(new Timestamp(prijDto.getTime()));
         prijava.setEmail(prijDto.getEmail());
         prijava = prij.add(prijava);
         student.getPrijave().add(prijava);

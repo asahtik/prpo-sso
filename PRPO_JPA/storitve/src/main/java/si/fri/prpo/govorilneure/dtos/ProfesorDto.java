@@ -2,6 +2,11 @@ package si.fri.prpo.govorilneure.dtos;
 
 public class ProfesorDto {
 
+    private Integer id;
+    private String ime;
+    private String priimek;
+    private String email;
+
     public ProfesorDto(Integer id, String ime, String priimek, String email) {
         this.id = id;
         this.ime = ime;
@@ -14,11 +19,6 @@ public class ProfesorDto {
         this.priimek = priimek;
         this.email = email;
     }
-
-    private Integer id;
-    private String ime;
-    private String priimek;
-    private String email;
 
     public Integer getId() { return id; }
 

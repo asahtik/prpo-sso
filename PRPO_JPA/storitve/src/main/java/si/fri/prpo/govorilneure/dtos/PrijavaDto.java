@@ -7,17 +7,17 @@ public class PrijavaDto {
     //prijava in student
 
 
-    public PrijavaDto(Integer id, String datum, Boolean potrjena, String email, Integer studentId, Integer terminId) {
+    public PrijavaDto(Integer id, long time, Boolean potrjena, String email, Integer studentId, Integer terminId) {
         this.id = id;
-        this.datum = datum;
+        this.time = time;
         this.potrjena = potrjena;
         this.email = email;
         this.studentId = studentId;
         this.terminId = terminId;
     }
 
-    public PrijavaDto(String datum, String email, Integer studentId, Integer terminId) {
-        this.datum = datum;
+    public PrijavaDto(long time, String email, Integer studentId, Integer terminId) {
+        this.time = time;
         this.potrjena = potrjena;
         this.email = email;
         this.studentId = studentId;
@@ -29,7 +29,7 @@ public class PrijavaDto {
     }
 
     private Integer id;
-    private String datum;
+    private long time;
     private Boolean potrjena = false;
     private String email;
     private Integer studentId;
@@ -59,11 +59,11 @@ public class PrijavaDto {
         this.studentId = studentId;
     }
 
-    public String getDatum() {
-        return datum;
+    public long getTime() {
+        return time;
     }
 
-    public void setDatum(String datum) { this.datum = datum; }
+    public void setTime(long time) { this.time = time; }
 
     public Boolean getPotrjena() {
         return potrjena;

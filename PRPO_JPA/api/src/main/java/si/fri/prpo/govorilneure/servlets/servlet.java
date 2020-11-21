@@ -7,6 +7,7 @@ import si.fri.prpo.govorilneure.entitete.Prijava;
 import si.fri.prpo.govorilneure.entitete.Profesor;
 import si.fri.prpo.govorilneure.entitete.Student;
 import si.fri.prpo.govorilneure.entitete.Termin;
+import si.fri.prpo.govorilneure.pretvorniki.TStoString;
 import si.fri.prpo.govorilneure.zrna.*;
 
 import javax.inject.Inject;
@@ -16,7 +17,8 @@ import javax.servlet.annotation.WebServlet;
         import javax.servlet.http.HttpServletResponse;
         import java.io.IOException;
         import java.io.PrintWriter;
-        import java.util.List;
+import java.sql.Timestamp;
+import java.util.List;
 
 @WebServlet("/servlet") //kje poslusa
 public class servlet extends HttpServlet {
@@ -38,12 +40,12 @@ public class servlet extends HttpServlet {
         upravljanjeSestankovZrno.dodajProfesorja(new ProfesorDto("Senor", "Carlos", "SC@gmail.com"));
         upravljanjeSestankovZrno.dodajStudenta(new StudentDto("Jaka", "Adut", "don@don.com", 63180144));
         upravljanjeSestankovZrno.dodajStudenta(new StudentDto("Janez", "Bidet", "jan@gmail.com", 63180144));
-        upravljanjeSestankovZrno.dodajTermin(new TerminDto("13:45","2020-12-11",6,"Ljubljana",1));
-        upravljanjeSestankovZrno.dodajTermin(new TerminDto("14:45","2020-12-11",6,"Ljubljana",1));
-        upravljanjeSestankovZrno.dodajTermin(new TerminDto("15:45","2020-12-12",6,"Ljubljana",2));
-        upravljanjeSestankovZrno.dodajPrijavo(new PrijavaDto("2020-12-10", "teams@teams.com", 1, 1));
-        upravljanjeSestankovZrno.dodajPrijavo(new PrijavaDto("2020-12-10", "teams@teams.com", 1, 2));
-        upravljanjeSestankovZrno.dodajPrijavo(new PrijavaDto("2020-12-09", "teams2@teams2.com", 2, 3));
+        upravljanjeSestankovZrno.dodajTermin(new TerminDto(Timestamp.valueOf("2020-11-11 13:00:00.0").getTime(),6,"Ljubljana",1));
+        upravljanjeSestankovZrno.dodajTermin(new TerminDto(Timestamp.valueOf("2020-11-11 15:00:00.0").getTime(),6,"Ljubljana",1));
+        upravljanjeSestankovZrno.dodajTermin(new TerminDto(Timestamp.valueOf("2020-11-12 13:30:00.0").getTime(),6,"Ljubljana",2));
+        upravljanjeSestankovZrno.dodajPrijavo(new PrijavaDto(System.currentTimeMillis(), "teams@teams.com", 1, 1));
+        upravljanjeSestankovZrno.dodajPrijavo(new PrijavaDto(System.currentTimeMillis(), "teams@teams.com", 1, 2));
+        upravljanjeSestankovZrno.dodajPrijavo(new PrijavaDto(System.currentTimeMillis(), "teams2@teams2.com", 2, 3));
         List<Profesor> profesorji = profesorZrno.getAll();
         for(Profesor p:profesorji)
             w.println("Profesor: id: " + p.getId() + ", ime: " + p.getIme() + ", priimek: " + p.getPriimek());
@@ -52,13 +54,13 @@ public class servlet extends HttpServlet {
             w.println("Student: id: " + p.getId() + ", ime: " + p.getIme() + ", priimek: " + p.getPriimek());
         List<Termin> termini = terminZrno.getAll();
         for(Termin t:termini)
-            w.println("Termin: id: " + t.getId() + ", datum: " + t.getDatum() + ", ura: " + t.getUra() + ", max st: " + t.getMaxSt() + ", prof id: " + t.getProfesor().getId());
+            w.println("Termin: id: " + t.getId() + ", datum in ura: " + TStoString.TStoStr(t.getTimestamp()) + ", max st: " + t.getMaxSt() + ", prof id: " + t.getProfesor().getId());
         List<Prijava> prijave = prijavaZrno.getAll();
         for(Prijava t:prijave)
-            w.println("Prijava: id: " + t.getId() + ", datum: " + t.getDatum() + ", potrjeno: " + t.getPotrjena() + ", student id: " + t.getStudent().getId() + ", termin id: " + t.getTermin().getId());
+            w.println("Prijava: id: " + t.getId() + ", datum in ura: " + TStoString.TStoStr(t.getTimestamp()) + ", potrjeno: " + t.getPotrjena() + ", student id: " + t.getStudent().getId() + ", termin id: " + t.getTermin().getId());
         w.println("Potrditev prijave z id = 2");
         Prijava potr = upravljanjeSestankovZrno.potrdiPrijavo(new PrijavaDto(2));
-        w.println("Prijava: id: " + potr.getId() + ", datum: " + potr.getDatum() + ", potrjeno: " + potr.getPotrjena() + ", student id: " + potr.getStudent().getId() + ", termin id: " + potr.getTermin().getId());
+        w.println("Prijava: id: " + potr.getId() + ", datum in ura: " + TStoString.TStoStr(potr.getTimestamp()) + ", potrjeno: " + potr.getPotrjena() + ", student id: " + potr.getStudent().getId() + ", termin id: " + potr.getTermin().getId());
     }
 }
 

@@ -1,5 +1,7 @@
 package si.fri.prpo.govorilneure.entitete;
 
+import javax.json.bind.annotation.JsonbProperty;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.util.List;
 
@@ -26,6 +28,7 @@ public class Student {
     @Column
     private Integer stizkaznice;
 
+    @JsonbTransient
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private List<Prijava> prijave;
 

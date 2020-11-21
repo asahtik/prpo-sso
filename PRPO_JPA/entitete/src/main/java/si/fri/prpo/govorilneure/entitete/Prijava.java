@@ -1,13 +1,15 @@
 package si.fri.prpo.govorilneure.entitete;
 
+import si.fri.prpo.govorilneure.pretvorniki.TStoString;
+
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
 @NamedQueries(value =
         {
                 @NamedQuery(name = "Prijava.getAll", query = "SELECT p FROM Prijava p"),
-                @NamedQuery(name = "Prijava.getByDatum", query = "SELECT p FROM Prijava p WHERE p.datum = :datum"),
                 @NamedQuery(name = "Prijava.getByEmail", query = "SELECT p FROM Prijava p WHERE p.email = :email"),
                 @NamedQuery(name = "Prijava.getAllEmail", query = "SELECT p.email FROM Prijava p")
         })
@@ -18,7 +20,7 @@ public class Prijava {
     private Integer id;
 
     @Column
-    private String datum;
+    private Timestamp timestamp;
     @Column
     private Boolean potrjena = false;
     @Column
@@ -56,12 +58,12 @@ public class Prijava {
         this.potrjena = potrjena;
     }
 
-    public String getDatum() {
-        return datum;
+    public Timestamp getTimestamp() {
+        return timestamp;
     }
 
-    public void setDatum(String datum) {
-        this.datum = datum;
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
     }
 
     public Integer getId() {
@@ -78,5 +80,16 @@ public class Prijava {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    @Override
+    public String toString() {
+        return "Prijava {" +
+                "id=" + id +
+                ", ura in datum="+ TStoString.TStoStr(timestamp) +
+                ", potrjena=" + potrjena +
+                ", termin='" + termin.getId() + '\'' +
+                ", student=" + student.getId() +
+                '}';
     }
 }

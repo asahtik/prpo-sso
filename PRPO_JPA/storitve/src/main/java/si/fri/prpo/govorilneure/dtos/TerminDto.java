@@ -3,24 +3,21 @@ package si.fri.prpo.govorilneure.dtos;
 public class TerminDto {
 
     private int id;
-    private String ura;
-    private String datum;
+    private long time;
     private int maxSt;
     private String lokacija;
     private int profesor_id;
 
-    public TerminDto(int id, String ura, String datum, int maxSt, String lokacija, int profesor_id) {
+    public TerminDto(int id, long time, int maxSt, String lokacija, int profesor_id) {
         this.id = id;
-        this.ura = ura;
-        this.datum = datum;
+        this.time = time;
         this.maxSt = maxSt;
         this.lokacija = lokacija;
         this.profesor_id = profesor_id;
     }
 
-    public TerminDto(String ura, String datum, int maxSt, String lokacija, int profesor_id) {
-        this.ura = ura;
-        this.datum = datum;
+    public TerminDto(long time, int maxSt, String lokacija, int profesor_id) {
+        this.time = time;
         this.maxSt = maxSt;
         this.lokacija = lokacija;
         this.profesor_id = profesor_id;
@@ -34,20 +31,12 @@ public class TerminDto {
         this.id = id;
     }
 
-    public String getUra() {
-        return ura;
+    public long getTime() {
+        return time;
     }
 
-    public void setUra(String ura) {
-        this.ura = ura;
-    }
-
-    public String getDatum() {
-        return datum;
-    }
-
-    public void setDatum(String datum) {
-        this.datum = datum;
+    public void setTime(long time) {
+        this.time = time;
     }
 
     public int getMaxSt() {

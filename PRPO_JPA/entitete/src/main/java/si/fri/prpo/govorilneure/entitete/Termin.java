@@ -1,5 +1,9 @@
 package si.fri.prpo.govorilneure.entitete;
+import si.fri.prpo.govorilneure.pretvorniki.TStoString;
+
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
@@ -7,8 +11,6 @@ import java.util.List;
         {
                 @NamedQuery(name = "Termin.getAll", query = "SELECT t FROM Termin t"),
                 @NamedQuery(name = "Termin.getById", query = "SELECT t FROM Termin t WHERE t.id = :id"),
-                @NamedQuery(name = "Termin.getByUra", query = "SELECT t FROM Termin t WHERE t.ura = :ura"),
-                @NamedQuery(name = "Termin.getByDatum", query = "SELECT t FROM Termin t WHERE t.datum = :datum"),
                 @NamedQuery(name = "Termin.getAllLocations", query = "SELECT t.location FROM Termin t")
         })
 public class Termin {
@@ -17,9 +19,7 @@ public class Termin {
     private Integer id;
 
     @Column
-    private String datum;
-    @Column
-    private String ura;
+    private Timestamp timestamp;
     @Column
     private int maxSt;
     @Column
@@ -29,6 +29,7 @@ public class Termin {
     @JoinColumn(name = "profesor_id")
     private Profesor profesor;
 
+    @JsonbTransient
     @OneToMany(mappedBy = "termin", cascade = CascadeType.ALL)
     private List<Prijava> prijave;
 
@@ -40,12 +41,12 @@ public class Termin {
         this.id = id;
     }
 
-    public String getDatum() {
-        return datum;
+    public Timestamp getTimestamp() {
+        return timestamp;
     }
 
-    public void setDatum(String datum) {
-        this.datum = datum;
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
     }
 
     public String getLocation() {
@@ -54,15 +55,6 @@ public class Termin {
 
     public void setLocation(String location) {
         this.location = location;
-    }
-
-
-    public String getUra() {
-        return ura;
-    }
-
-    public void setUra(String ura) {
-        this.ura = ura;
     }
 
     public int getMaxSt() {
@@ -93,8 +85,7 @@ public class Termin {
     public String toString() {
         return "Termin{" +
                 "id=" + id +
-                ", datum='" + datum + '\'' +
-                ", ura='" + ura + '\'' +
+                ", ura in datum="+ TStoString.TStoStr(timestamp) +
                 ", maxSt=" + maxSt +
                 ", location='" + location + '\'' +
                 ", profesor=" + profesor +

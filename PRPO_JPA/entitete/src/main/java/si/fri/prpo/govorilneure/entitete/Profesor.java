@@ -1,5 +1,6 @@
 package si.fri.prpo.govorilneure.entitete;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class Profesor {
 
     private String email;
 
+    @JsonbTransient
     @OneToMany(mappedBy = "profesor", cascade = CascadeType.ALL)
     private List<Termin> termini;
 
@@ -32,7 +34,7 @@ public class Profesor {
         this.id = id;
     }
 
-    public List<Termin> getTermin() {
+    public List<Termin> getTermini() {
         return termini;
     }
 
