@@ -140,6 +140,12 @@ public class UpravljanjeSestankovZrno {
         else return s.getPrijave();
     }
 
+    public List<Prijava> vrniPrijaveNaTermin(int id) {
+        Termin t = vrniTermin(id);
+        if(t == null) return null;
+        else if(t.getPrijave().size() == 0) return null;
+        else return t.getPrijave();
+    }
 
     @Transactional
     public Termin dodajTermin(TerminDto termdto) {
@@ -150,7 +156,7 @@ public class UpravljanjeSestankovZrno {
             return null;
         }
         Termin t = new Termin();
-        t.setTimestamp(new Timestamp(termdto.getTime()));
+        t.setTimestamp(termdto.getTime());
         t.setMaxSt(termdto.getMaxSt());
         t.setLocation(termdto.getLokacija());
         t.setProfesor(p);
@@ -178,7 +184,7 @@ public class UpravljanjeSestankovZrno {
         Prijava prijava = new Prijava();
         prijava.setStudent(student);
         prijava.setTermin(termin);
-        prijava.setTimestamp(new Timestamp(prijDto.getTime()));
+        prijava.setTimestamp(prijDto.getTime());
         prijava.setEmail(prijDto.getEmail());
         prijava = prij.add(prijava);
         student.getPrijave().add(prijava);

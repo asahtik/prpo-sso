@@ -46,7 +46,7 @@ public class PrijavaVir {
     @PUT
     @Consumes({"application/si.fri.prpo.govorilneure.entitete.Prijava+json"})
     public Response potrdiPrijavo(Prijava p) {
-        PrijavaDto dto = new PrijavaDto(p.getId(), p.getTimestamp().getTime(), true, p.getEmail(), p.getStudent().getId(), p.getTermin().getId());
+        PrijavaDto dto = new PrijavaDto(p.getId(), p.getTimestamp(), true, p.getEmail(), p.getStudent().getId(), p.getTermin().getId());
         Prijava ret = uszrno.potrdiPrijavo(dto);
         if (ret != null) return Response.status(Response.Status.OK).entity(ret).build();
         else return Response.status(500).build();

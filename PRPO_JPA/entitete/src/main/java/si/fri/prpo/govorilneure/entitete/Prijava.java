@@ -20,7 +20,7 @@ public class Prijava {
     private Integer id;
 
     @Column
-    private Timestamp timestamp;
+    private long timestamp;
     @Column
     private Boolean potrjena = false;
     @Column
@@ -58,11 +58,11 @@ public class Prijava {
         this.potrjena = potrjena;
     }
 
-    public Timestamp getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
 

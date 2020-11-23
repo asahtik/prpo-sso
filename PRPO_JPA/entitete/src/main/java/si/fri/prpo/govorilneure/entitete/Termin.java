@@ -19,7 +19,7 @@ public class Termin {
     private Integer id;
 
     @Column
-    private Timestamp timestamp;
+    private long timestamp;
     @Column
     private int maxSt;
     @Column
@@ -41,11 +41,11 @@ public class Termin {
         this.id = id;
     }
 
-    public Timestamp getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
 
