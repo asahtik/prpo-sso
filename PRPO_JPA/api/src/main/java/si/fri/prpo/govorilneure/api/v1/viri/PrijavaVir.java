@@ -29,7 +29,7 @@ public class PrijavaVir {
 
     @GET
     @Path("{id}")
-    public Response vrniStudenta(@PathParam("id") int idPrijave) {
+    public Response vrniPrijavo(@PathParam("id") int idPrijave) {
         Prijava prijava = uszrno.vrniPrijavo(idPrijave);
         if(prijava != null) return Response.status(Response.Status.OK).entity(prijava).build();
         else return Response.status(500).build();

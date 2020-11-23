@@ -1,7 +1,5 @@
 package si.fri.prpo.govorilneure.dtos;
 
-import si.fri.prpo.govorilneure.entitete.Termin;
-
 public class PrijavaDto {
 
     //prijava in student
