@@ -1,8 +1,6 @@
 package si.fri.prpo.govorilneure.api.v1.viri;
 
-import si.fri.prpo.govorilneure.dtos.StudentDto;
 import si.fri.prpo.govorilneure.dtos.TerminDto;
-import si.fri.prpo.govorilneure.entitete.Student;
 import si.fri.prpo.govorilneure.entitete.Termin;
 import si.fri.prpo.govorilneure.zrna.UpravljanjeSestankovZrno;
 
@@ -37,8 +35,9 @@ public class TerminVir {
     }
 
     @POST
-    @Consumes({"application/si.fri.prpo.govorilneure.dtos.TerminDto+json"})
-    public Response dodajTermin(TerminDto dto) {
+    @Consumes({"application/si.fri.prpo.govorilneure.entitete.Termin+json"})
+    public Response dodajTermin(Termin t) {
+        TerminDto dto = new TerminDto(t.getTimestamp().getTime(), t.getMaxSt(), t.getLocation(), t.getProfesor().getId());
         Termin ret = uszrno.dodajTermin(dto);
         if(ret != null) return Response.status(Response.Status.OK).entity(ret).build();
         else return Response.status(500).build();

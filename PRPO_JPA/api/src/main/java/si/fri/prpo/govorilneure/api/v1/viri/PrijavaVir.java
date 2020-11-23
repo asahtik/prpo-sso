@@ -1,9 +1,7 @@
 package si.fri.prpo.govorilneure.api.v1.viri;
 
 import si.fri.prpo.govorilneure.dtos.PrijavaDto;
-import si.fri.prpo.govorilneure.dtos.StudentDto;
 import si.fri.prpo.govorilneure.entitete.Prijava;
-import si.fri.prpo.govorilneure.entitete.Student;
 import si.fri.prpo.govorilneure.zrna.UpravljanjeSestankovZrno;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -36,8 +34,9 @@ public class PrijavaVir {
     }
 
     @POST
-    @Consumes({"application/si.fri.prpo.govorilneure.dtos.PrijavaDto+json"})
-    public Response dodajPrijavo(PrijavaDto dto) {
+    @Consumes({"application/si.fri.prpo.govorilneure.entitete.Prijava+json"})
+    public Response dodajPrijavo(Prijava p) {
+        PrijavaDto dto = new PrijavaDto(0, p.getEmail(), p.getStudent().getId(), p.getTermin().getId());
         dto.setTime(System.currentTimeMillis());
         Prijava ret = uszrno.dodajPrijavo(dto);
         if(ret != null) return Response.status(Response.Status.OK).entity(ret).build();
@@ -45,8 +44,9 @@ public class PrijavaVir {
     }
 
     @PUT
-    @Consumes({"application/si.fri.prpo.govorilneure.dtos.PrijavaDto+json"})
-    public Response potrdiPrijavo(PrijavaDto dto) {
+    @Consumes({"application/si.fri.prpo.govorilneure.entitete.Prijava+json"})
+    public Response potrdiPrijavo(Prijava p) {
+        PrijavaDto dto = new PrijavaDto(p.getId(), p.getTimestamp().getTime(), true, p.getEmail(), p.getStudent().getId(), p.getTermin().getId());
         Prijava ret = uszrno.potrdiPrijavo(dto);
         if (ret != null) return Response.status(Response.Status.OK).entity(ret).build();
         else return Response.status(500).build();

@@ -44,8 +44,9 @@ public class ProfesorVir {
     }
 
     @POST
-    @Consumes({"application/si.fri.prpo.govorilneure.dtos.ProfesorDto+json"})
-    public Response dodajProfesorja(ProfesorDto dto) {
+    @Consumes({"application/si.fri.prpo.govorilneure.entitete.Profesor+json"})
+    public Response dodajProfesorja(Profesor p) {
+        ProfesorDto dto = new ProfesorDto(p.getIme(), p.getPriimek(), p.getEmail());
         Profesor ret = uszrno.dodajProfesorja(dto);
         if(ret != null) return Response.status(Response.Status.OK).entity(ret).build();
         else return Response.status(500).build();

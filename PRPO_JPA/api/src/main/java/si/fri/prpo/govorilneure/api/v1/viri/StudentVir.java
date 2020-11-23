@@ -43,8 +43,9 @@ public class StudentVir {
     }
 
     @POST
-    @Consumes({"application/si.fri.prpo.govorilneure.dtos.StudentDto+json"})
-    public Response dodajStudenta(StudentDto dto) {
+    @Consumes({"application/si.fri.prpo.govorilneure.entitete.Student+json"})
+    public Response dodajStudenta(Student s) {
+        StudentDto dto = new StudentDto(s.getIme(), s.getPriimek(), s.getEmail(), s.getStizkaznice());
         Student ret = uszrno.dodajStudenta(dto);
         if(ret != null) return Response.status(Response.Status.OK).entity(ret).build();
         else return Response.status(500).build();

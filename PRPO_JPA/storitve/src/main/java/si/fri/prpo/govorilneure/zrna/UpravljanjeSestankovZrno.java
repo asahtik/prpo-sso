@@ -194,17 +194,29 @@ public class UpravljanjeSestankovZrno {
         if(prijava == null){
             log.info("Id prijave neveljaven!");
             return null;
-        }
-
-        else if(prijava.getPotrjena() == true){
+        } else if(prijava.getPotrjena() == true){
             log.info("Prijava je ze potrjena!");
             //return null;
+        } else {
+            Termin t = prijava.getTermin();
+            if (t == null) {
+                log.warning("Napaka v podatkovni bazi (prijava nima termina)!");
+                return null;
+            }
+            else {
+                List<Prijava> prijaveTermina = t.getPrijave();
+                int st = 0;
+                for(Prijava i:prijaveTermina) {
+                    if(i.getPotrjena()) st++;
+                    if(st >= t.getMaxSt()) break;
+                }
+                if(st < t.getMaxSt()) prijava.setPotrjena(true);
+                else {
+                    log.info("Maksimalno stevilo udelezencev v terminu je dosezeno!");
+                    return null;
+                }
+            }
         }
-
-        else {
-            prijava.setPotrjena(true);
-        }
-
         return prij.update(prijava.getId(), prijava);
     }
 }
