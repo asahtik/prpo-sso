@@ -1,5 +1,6 @@
 package si.fri.prpo.govorilneure.zrna;
 
+import si.fri.prpo.govorilneure.anotacije.BeleziKlice;
 import si.fri.prpo.govorilneure.entitete.Profesor;
 
 import javax.annotation.PostConstruct;
@@ -15,6 +16,7 @@ import java.util.logging.Logger;
 
 //@RequestScoped
 @ApplicationScoped
+@BeleziKlice
 public class ProfesorZrno {
 
     private static final Logger log = Logger.getLogger(ProfesorZrno.class.getName());

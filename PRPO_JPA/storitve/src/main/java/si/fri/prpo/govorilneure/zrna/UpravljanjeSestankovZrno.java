@@ -1,5 +1,6 @@
 package si.fri.prpo.govorilneure.zrna;
 
+import si.fri.prpo.govorilneure.anotacije.BeleziKlice;
 import si.fri.prpo.govorilneure.dtos.PrijavaDto;
 import si.fri.prpo.govorilneure.dtos.ProfesorDto;
 import si.fri.prpo.govorilneure.dtos.StudentDto;
@@ -13,14 +14,13 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.transaction.Transactional;
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @ApplicationScoped
+@BeleziKlice
 public class UpravljanjeSestankovZrno {
 
     private static final Logger log = Logger.getLogger(UpravljanjeSestankovZrno.class.getName());
