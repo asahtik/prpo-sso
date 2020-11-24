@@ -1,9 +1,9 @@
 package si.fri.prpo.govorilneure.api.v1.viri;
 
-import si.fri.prpo.govorilneure.dtos.PrijavaDto;
 import si.fri.prpo.govorilneure.dtos.TerminDto;
 import si.fri.prpo.govorilneure.entitete.Prijava;
 import si.fri.prpo.govorilneure.entitete.Termin;
+import si.fri.prpo.govorilneure.zrna.TerminZrno;
 import si.fri.prpo.govorilneure.zrna.UpravljanjeSestankovZrno;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -21,26 +21,20 @@ import java.util.List;
 public class TerminVir {
     @Inject
     private UpravljanjeSestankovZrno uszrno;
+    @Inject
+    private TerminZrno tzrno;
 
     @GET // query params date format (ms or string)?
     public Response vrniTermine() {
-        List<Termin> termini = uszrno.vrniTermine();
+        List<Termin> termini = tzrno.getAll();
         return Response.status(Response.Status.OK).entity(termini).build();
     }
 
     @GET
     @Path("{id}")
     public Response vrniTermin(@PathParam("id") int idTermina) {
-        Termin termin = uszrno.vrniTermin(idTermina);
+        Termin termin = tzrno.getById(idTermina);
         if(termin != null) return Response.status(Response.Status.OK).entity(termin).build();
-        else return Response.status(500).build();
-    }
-
-    @GET
-    @Path("{id}/prijave")
-    public Response vrniPrijave(@PathParam("id") int idTermina) {
-        List<Prijava> prijave = uszrno.vrniPrijaveNaTermin(idTermina);
-        if(prijave != null) return Response.status(Response.Status.OK).entity(prijave).build();
         else return Response.status(500).build();
     }
 
@@ -48,7 +42,7 @@ public class TerminVir {
     @Consumes({"application/si.fri.prpo.govorilneure.entitete.Termin+json"})
     public Response dodajTermin(Termin t) {
         TerminDto dto = new TerminDto(t.getTimestamp(), t.getMaxSt(), t.getLocation(), t.getProfesor().getId());
-        Termin ret = uszrno.dodajTermin(dto);
+        Termin ret = tzrno.getById(uszrno.dodajTermin(dto).getId());
         if(ret != null) return Response.status(Response.Status.OK).entity(ret).build();
         else return Response.status(500).build();
     }

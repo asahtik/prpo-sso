@@ -23,6 +23,10 @@ public class TerminDto {
         this.profesor_id = profesor_id;
     }
 
+    public TerminDto(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

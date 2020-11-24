@@ -44,40 +44,7 @@ public class UpravljanjeSestankovZrno {
     @Inject
     private PrijavaZrno prij;
 
-    public List<Student> vrniStudente() {
-        return stud.getAll();
-    }
-
-    public Student vrniStudenta(int id) {
-        return stud.getById(id);
-    }
-
-    public List<Profesor> vrniProfesorje() {
-        return prof.getAll();
-    }
-
-    public Profesor vrniProfesorja(int id) {
-        return prof.getById(id);
-    }
-
-    public List<Termin> vrniTermine() {
-        return term.getAll();
-    }
-
-    public Termin vrniTermin(int id) {
-        return term.getById(id);
-    }
-
-    public List<Prijava> vrniPrijave() {
-        return prij.getAll();
-    }
-
-    public Prijava vrniPrijavo(int id) {
-        return prij.getById(id);
-    }
-
-    @Transactional
-    public Profesor dodajProfesorja(ProfesorDto profdto) {
+    public ProfesorDto dodajProfesorja(ProfesorDto profdto) {
         // Ime in priimek obvezna
         profdto.setIme(profdto.getIme().trim());
         profdto.setPriimek(profdto.getPriimek().trim());
@@ -96,18 +63,10 @@ public class UpravljanjeSestankovZrno {
         p.setIme(profdto.getIme());
         p.setPriimek(profdto.getPriimek());
         p.setEmail(profdto.getEmail());
-        return prof.add(p);
+        return new ProfesorDto(prof.add(p).getId());
     }
 
-    public List<Termin> vrniTermineProfesorja(int id) {
-        Profesor p = vrniProfesorja(id);
-        if(p == null) return null;
-        else if(p.getTermini().size() == 0) return null;
-        else return p.getTermini();
-    }
-
-    @Transactional
-    public Student dodajStudenta(StudentDto studdto) {
+    public StudentDto dodajStudenta(StudentDto studdto) {
         // Ime in priimek obvezna
         studdto.setIme(studdto.getIme().trim());
         studdto.setPriimek(studdto.getPriimek().trim());
@@ -130,26 +89,10 @@ public class UpravljanjeSestankovZrno {
         s.setIme(studdto.getIme());
         s.setPriimek(studdto.getPriimek());
         s.setEmail(studdto.getEmail());
-        return stud.add(s);
+        return new StudentDto(stud.add(s).getId());
     }
 
-    public List<Prijava> vrniPrijaveStudenta(int id) {
-        Student s = vrniStudenta(id);
-        if(s == null) return null;
-        else if(s.getPrijave().size() == 0) return null;
-        else return s.getPrijave();
-    }
-
-    public List<Prijava> vrniPrijaveNaTermin(int id) {
-        Termin t = vrniTermin(id);
-        if(t == null) return null;
-        else if(t.getPrijave().size() == 0) return null;
-        else return t.getPrijave();
-    }
-
-    @Transactional
-    public Termin dodajTermin(TerminDto termdto) {
-        // Ura obvezna (hh:mm), datum obvezen (yyyy-mm-dd), veljaven profesor id obvezen
+    public TerminDto dodajTermin(TerminDto termdto) {
         Profesor p;
         if((p = prof.getById(termdto.getProfesor_id())) == null) {
             log.warning("Id profesorja neveljaven!");
@@ -162,11 +105,10 @@ public class UpravljanjeSestankovZrno {
         t.setProfesor(p);
         t = term.add(t);
         p.getTermini().add(t);
-        return t;
+        return new TerminDto(t.getId());
     }
 
-    @Transactional
-    public Prijava dodajPrijavo(PrijavaDto prijDto){
+    public PrijavaDto dodajPrijavo(PrijavaDto prijDto){
 
         //dto prijDto je za studenta in prijavo
         Student student;
@@ -189,11 +131,10 @@ public class UpravljanjeSestankovZrno {
         prijava = prij.add(prijava);
         student.getPrijave().add(prijava);
         termin.getPrijave().add(prijava);
-        return prijava;
+        return new PrijavaDto(prijava.getId());
     }
 
-    @Transactional
-    public Prijava potrdiPrijavo(PrijavaDto prijDto){
+    public PrijavaDto potrdiPrijavo(PrijavaDto prijDto){
         //ali prijava obstaja
         Prijava prijava = prij.getById(prijDto.getId());
 
@@ -223,6 +164,7 @@ public class UpravljanjeSestankovZrno {
                 }
             }
         }
-        return prij.update(prijava.getId(), prijava);
+        prijava = prij.update(prijava.getId(), prijava);
+        return new PrijavaDto(prijava.getId());
     }
 }

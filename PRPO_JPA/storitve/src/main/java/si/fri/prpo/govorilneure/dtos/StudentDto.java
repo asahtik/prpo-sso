@@ -22,6 +22,10 @@ public class StudentDto {
         this.stIzkaznice = stIzkaznice;
     }
 
+    public StudentDto(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

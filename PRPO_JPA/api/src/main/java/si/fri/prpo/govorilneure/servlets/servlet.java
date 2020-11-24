@@ -59,7 +59,7 @@ public class servlet extends HttpServlet {
         for(Prijava t:prijave)
             w.println("Prijava: id: " + t.getId() + ", datum in ura: " + TStoString.TStoStr(t.getTimestamp()) + ", potrjeno: " + t.getPotrjena() + ", student id: " + t.getStudent().getId() + ", termin id: " + t.getTermin().getId());
         w.println("Potrditev prijave z id = 2");
-        Prijava potr = upravljanjeSestankovZrno.potrdiPrijavo(new PrijavaDto(2));
+        Prijava potr = prijavaZrno.getById(upravljanjeSestankovZrno.potrdiPrijavo(new PrijavaDto(2)).getId());
         w.println("Prijava: id: " + potr.getId() + ", datum in ura: " + TStoString.TStoStr(potr.getTimestamp()) + ", potrjeno: " + potr.getPotrjena() + ", student id: " + potr.getStudent().getId() + ", termin id: " + potr.getTermin().getId());
     }
 }

@@ -1,12 +1,10 @@
 package si.fri.prpo.govorilneure.zrna;
 
 import si.fri.prpo.govorilneure.entitete.Profesor;
-import si.fri.prpo.govorilneure.entitete.Termin;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
