@@ -15,7 +15,7 @@ public class BelezenjeKlicevInterceptor {
     @AroundInvoke
     public Object belezenjeKlicevInterceptor(InvocationContext context) throws Exception{
 
-        String methodName = context.getMethod().getName();
+        String methodName = context.getMethod().getDeclaringClass().getName() + "." + context.getMethod().getName();
 
         if(belezka.get(methodName) == null){
             belezka.put(methodName, 1);
