@@ -1,4 +1,5 @@
 package si.fri.prpo.govorilneure.zrna;
+import si.fri.prpo.govorilneure.anotacije.BeleziKlice;
 import si.fri.prpo.govorilneure.entitete.Profesor;
 import si.fri.prpo.govorilneure.entitete.Student;
 
@@ -14,6 +15,7 @@ import java.util.UUID;
 import java.util.logging.Logger;
 
 @ApplicationScoped
+@BeleziKlice
 public class StudentZrno {
 
     private static final Logger log = Logger.getLogger(StudentZrno.class.getName());

@@ -1,5 +1,6 @@
 package si.fri.prpo.govorilneure.zrna;
 
+import si.fri.prpo.govorilneure.anotacije.BeleziKlice;
 import si.fri.prpo.govorilneure.dtos.PrijavaDto;
 import si.fri.prpo.govorilneure.dtos.ProfesorDto;
 import si.fri.prpo.govorilneure.dtos.StudentDto;
@@ -19,6 +20,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @ApplicationScoped
+@BeleziKlice
 public class UpravljanjeSestankovZrno {
 
     private static final Logger log = Logger.getLogger(UpravljanjeSestankovZrno.class.getName());
@@ -64,7 +66,6 @@ public class UpravljanjeSestankovZrno {
         p.setEmail(profdto.getEmail());
         return prof.add(p);
     }
-
     public Student dodajStudenta(StudentDto studdto) {
         // Ime in priimek obvezna
         studdto.setIme(studdto.getIme().trim());
