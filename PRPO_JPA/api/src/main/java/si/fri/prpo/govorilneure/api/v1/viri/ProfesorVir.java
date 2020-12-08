@@ -1,6 +1,11 @@
 package si.fri.prpo.govorilneure.api.v1.viri;
 
 import com.kumuluz.ee.rest.beans.QueryParameters;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
+import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import si.fri.prpo.govorilneure.dtos.ProfesorDto;
 import si.fri.prpo.govorilneure.entitete.Profesor;
 
@@ -30,6 +35,10 @@ public class ProfesorVir {
     @Inject
     private ProfesorZrno profzrno;
 
+    @Operation(description = "Vrne seznam profesorjev.", summary = "Seznam profesorjev")
+    @APIResponses({
+            @APIResponse(responseCode = "200", description = "Profesorji.")
+    })
     @GET
     public Response vrniProfesorje() {
         QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
@@ -38,17 +47,27 @@ public class ProfesorVir {
         return Response.ok(profesorji).header("X-Total-Count", count).build();
     }
 
+    @Operation(description = "Vrne enega profesorja.", summary = "Profesor")
+    @APIResponses({
+            @APIResponse(responseCode = "200", description = "Profesor."),
+            @APIResponse(responseCode = "404", description = "Profesor ni najden.")
+    })
     @GET
     @Path("{id}")
-    public Response vrniProfesorja(@PathParam("id") int idProfesorja) {
+    public Response vrniProfesorja(@Parameter(description = "ID profesorja", required = true) @PathParam("id") int idProfesorja) {
         Profesor profesor = profzrno.getById(idProfesorja);
         if(profesor != null) return Response.status(Response.Status.OK).entity(profesor).build();
-        else return Response.status(500).build();
+        else return Response.status(404).build();
     }
 
+    @Operation(description = "Doda novega profesorja.", summary = "Nov profesor")
+    @APIResponses({
+            @APIResponse(responseCode = "200", description = "Nov profesor."),
+            @APIResponse(responseCode = "500", description = "Napaka na strežniku.")
+    })
     @POST
     @Consumes({"application/si.fri.prpo.govorilneure.entitete.Profesor+json"})
-    public Response dodajProfesorja(Profesor p) {
+    public Response dodajProfesorja(@RequestBody(description = "Entiteta Profesor", required = true) Profesor p) {
         Profesor ret = profzrno.getById(uszrno.dodajProfesorja(new ProfesorDto(p.getIme(), p.getPriimek(), p.getEmail())).getId());
         if(ret != null) return Response.status(Response.Status.OK).entity(ret).build();
         else return Response.status(500).build();

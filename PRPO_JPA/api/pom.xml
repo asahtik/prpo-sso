@@ -25,6 +25,21 @@
             <artifactId>kumuluzee-jax-rs-jersey</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.kumuluz.ee.openapi</groupId>
+            <artifactId>kumuluzee-openapi-mp</artifactId>
+            <version>${kumuluzee-openapi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee.openapi</groupId>
+            <artifactId>kumuluzee-openapi-mp-ui</artifactId>
+            <version>${kumuluzee-openapi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee.config</groupId>
+            <artifactId>kumuluzee-config-mp</artifactId>
+            <version>${kumuluzee-config.version}</version>
+        </dependency>
+        <dependency>
             <groupId>si.fri.prpo.govorilneure</groupId>
             <artifactId>storitve</artifactId>
         </dependency>
