@@ -1,5 +1,7 @@
 package si.fri.prpo.govorilneure.zrna;
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
+import com.kumuluz.ee.rest.utils.JPAUtils;
 import si.fri.prpo.govorilneure.anotacije.BeleziKlice;
 import si.fri.prpo.govorilneure.entitete.Termin;
 
@@ -38,16 +40,16 @@ public class TerminZrno {
         return (List<Termin>)em.createNamedQuery("Termin.getAll").getResultList();
     }
 
+    public List<Termin> getAll(QueryParameters query) {
+        return (List<Termin>) JPAUtils.queryEntities(em, Termin.class, query);
+    }
+
+    public long getAllCount(QueryParameters query) {
+        return JPAUtils.queryEntitiesCount(em, Termin.class, query);
+    }
+
     public List<Termin> getAllLocations() {
         return (List<Termin>)em.createNamedQuery("Termin.getAllLocations").getResultList();
-    }
-
-    public List<Termin> getByUra(String ura) {
-        return (List<Termin>)em.createNamedQuery("Termin.getByUra").setParameter("ura", ura).getResultList();
-    }
-
-    public List<Termin> getByDatum(String datum) {
-        return (List<Termin>)em.createNamedQuery("Termin.getByDatum").setParameter("datum", datum).getResultList();
     }
 
     public Termin getById(int id) {

@@ -1,5 +1,6 @@
 package si.fri.prpo.govorilneure.api.v1.viri;
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
 import si.fri.prpo.govorilneure.dtos.ProfesorDto;
 import si.fri.prpo.govorilneure.entitete.Profesor;
 
@@ -10,8 +11,10 @@ import si.fri.prpo.govorilneure.zrna.UpravljanjeSestankovZrno;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import java.util.List;
 
 @Path("profesorji")
@@ -19,6 +22,9 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 @ApplicationScoped
 public class ProfesorVir {
+    @Context
+    protected UriInfo uriInfo;
+
     @Inject
     private UpravljanjeSestankovZrno uszrno;
     @Inject
@@ -26,8 +32,10 @@ public class ProfesorVir {
 
     @GET
     public Response vrniProfesorje() {
+        QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
         List<Profesor> profesorji = profzrno.getAll();
-        return Response.status(Response.Status.OK).entity(profesorji).build();
+        long count = profzrno.getAllCount(query);
+        return Response.ok(profesorji).header("X-Total-Count", count).build();
     }
 
     @GET

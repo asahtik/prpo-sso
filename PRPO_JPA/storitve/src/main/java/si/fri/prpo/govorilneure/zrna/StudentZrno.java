@@ -1,7 +1,10 @@
 package si.fri.prpo.govorilneure.zrna;
+import com.kumuluz.ee.rest.beans.QueryParameters;
+import com.kumuluz.ee.rest.utils.JPAUtils;
 import si.fri.prpo.govorilneure.anotacije.BeleziKlice;
 import si.fri.prpo.govorilneure.entitete.Profesor;
 import si.fri.prpo.govorilneure.entitete.Student;
+import si.fri.prpo.govorilneure.entitete.Termin;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -37,6 +40,14 @@ public class StudentZrno {
     // GET
     public List<Student> getAll() {
         return (List<Student>)em.createNamedQuery("Student.getAll").getResultList();
+    }
+
+    public List<Student> getAll(QueryParameters query) {
+        return (List<Student>) JPAUtils.queryEntities(em, Student.class, query);
+    }
+
+    public long getAllCount(QueryParameters query) {
+        return JPAUtils.queryEntitiesCount(em, Student.class, query);
     }
 
     public Student getById(int id) {

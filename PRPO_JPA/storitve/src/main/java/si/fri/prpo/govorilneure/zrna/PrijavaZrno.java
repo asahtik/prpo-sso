@@ -1,4 +1,6 @@
 package si.fri.prpo.govorilneure.zrna;
+import com.kumuluz.ee.rest.beans.QueryParameters;
+import com.kumuluz.ee.rest.utils.JPAUtils;
 import si.fri.prpo.govorilneure.anotacije.BeleziKlice;
 import si.fri.prpo.govorilneure.entitete.Prijava;
 import si.fri.prpo.govorilneure.entitete.Termin;
@@ -38,6 +40,14 @@ public class PrijavaZrno {
     // GET
     public List<Prijava> getAll() {
         return (List<Prijava>)em.createNamedQuery("Prijava.getAll").getResultList();
+    }
+
+    public List<Prijava> getAll(QueryParameters query) {
+        return (List<Prijava>) JPAUtils.queryEntities(em, Prijava.class, query);
+    }
+
+    public long getAllCount(QueryParameters query) {
+        return JPAUtils.queryEntitiesCount(em, Prijava.class, query);
     }
 
     public Prijava getById(int id) {
