@@ -46,7 +46,7 @@ public class StudentVir {
     @GET
     public Response vrniStudente() {
         QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
-        List<Student> studenti = szrno.getAll();
+        List<Student> studenti = szrno.getAll(query);
         long count = szrno.getAllCount(query);
         return Response.ok(studenti).header("X-Total-Count", count).build();
     }

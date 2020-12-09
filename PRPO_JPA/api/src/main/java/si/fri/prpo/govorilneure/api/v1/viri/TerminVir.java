@@ -48,7 +48,7 @@ public class TerminVir {
     @GET
     public Response vrniTermine() {
         QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
-        List<Termin> termini = tzrno.getAll();
+        List<Termin> termini = tzrno.getAll(query);
         long count = tzrno.getAllCount(query);
         return Response.ok(termini).header("X-Total-Count", count).build();
     }

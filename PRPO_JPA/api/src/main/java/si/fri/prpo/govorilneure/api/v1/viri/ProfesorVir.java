@@ -46,7 +46,7 @@ public class ProfesorVir {
     @GET
     public Response vrniProfesorje() {
         QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
-        List<Profesor> profesorji = profzrno.getAll();
+        List<Profesor> profesorji = profzrno.getAll(query);
         long count = profzrno.getAllCount(query);
         return Response.ok(profesorji).header("X-Total-Count", count).build();
     }

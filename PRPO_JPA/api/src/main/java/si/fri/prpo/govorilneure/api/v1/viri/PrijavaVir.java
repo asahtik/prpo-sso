@@ -46,7 +46,7 @@ public class PrijavaVir {
     @GET // query params date format (ms or string)?
     public Response vrniPrijave() {
         QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
-        List<Prijava> prijave = prijzrno.getAll();
+        List<Prijava> prijave = prijzrno.getAll(query);
         long count = prijzrno.getAllCount(query);
         return Response.ok(prijave).header("X-Total-Count", count).build();
     }
