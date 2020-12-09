@@ -69,6 +69,7 @@ public class StudentVir {
     @APIResponses({
             @APIResponse(responseCode = "200", description = "Nov študent.",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Student.class))}),
+            @APIResponse(responseCode = "400", description = "Manjkajoči oz. neustrezni podatki."),
             @APIResponse(responseCode = "500", description = "Napaka na strežniku.")
     })
     @POST

@@ -69,6 +69,7 @@ public class ProfesorVir {
     @APIResponses({
             @APIResponse(responseCode = "200", description = "Nov profesor.",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Profesor.class))}),
+            @APIResponse(responseCode = "400", description = "Manjkajoči oz. neustrezni podatki."),
             @APIResponse(responseCode = "500", description = "Napaka na strežniku.")
     })
     @POST

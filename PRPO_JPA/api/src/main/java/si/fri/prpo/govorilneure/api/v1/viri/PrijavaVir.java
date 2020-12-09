@@ -69,6 +69,7 @@ public class PrijavaVir {
     @APIResponses({
             @APIResponse(responseCode = "201", description = "Nova prijava.",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Prijava.class))}),
+            @APIResponse(responseCode = "400", description = "Manjkajoči oz. neustrezni podatki."),
             @APIResponse(responseCode = "500", description = "Napaka na strežniku.")
     })
     @POST
@@ -85,6 +86,7 @@ public class PrijavaVir {
     @APIResponses({
             @APIResponse(responseCode = "200", description = "Potrjena prijava.",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Prijava.class))}),
+            @APIResponse(responseCode = "400", description = "Manjkajoči oz. neustrezni podatki."),
             @APIResponse(responseCode = "404", description = "Prijava ni najdena.")
     })
     @PUT

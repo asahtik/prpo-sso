@@ -71,6 +71,7 @@ public class TerminVir {
     @APIResponses({
             @APIResponse(responseCode = "200", description = "Nov termin.",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Termin.class))}),
+            @APIResponse(responseCode = "400", description = "Manjkajoči oz. neustrezni podatki."),
             @APIResponse(responseCode = "500", description = "Napaka na strežniku.")
     })
     @POST
