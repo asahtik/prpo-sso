@@ -2,6 +2,10 @@ package si.fri.prpo.govorilneure.api.v1.viri;
 
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
+import org.eclipse.microprofile.openapi.annotations.headers.Header;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
@@ -35,7 +39,9 @@ public class PrijavaVir {
 
     @Operation(description = "Vrne seznam prijav.", summary = "Seznam prijav")
     @APIResponses({
-            @APIResponse(responseCode = "200", description = "Vsi uporabniki"),
+            @APIResponse(responseCode = "200", description = "Vsi uporabniki",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Prijava.class, type = SchemaType.ARRAY))},
+                    headers = {@Header(name = "X-Total-Count", description = "Število vrnjenih prijav.")})
     })
     @GET // query params date format (ms or string)?
     public Response vrniPrijave() {
@@ -47,7 +53,8 @@ public class PrijavaVir {
 
     @Operation(description = "Vrne eno prijavo.", summary = "Prijava")
     @APIResponses({
-            @APIResponse(responseCode = "200", description = "Prijava."),
+            @APIResponse(responseCode = "200", description = "Prijava.",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Prijava.class))}),
             @APIResponse(responseCode = "404", description = "Prijava ni najdena.")
     })
     @GET
@@ -60,7 +67,8 @@ public class PrijavaVir {
 
     @Operation(description = "Ustvari novo prijavo.", summary = "Nova prijava")
     @APIResponses({
-            @APIResponse(responseCode = "201", description = "Nova prijava."),
+            @APIResponse(responseCode = "201", description = "Nova prijava.",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Prijava.class))}),
             @APIResponse(responseCode = "500", description = "Napaka na strežniku.")
     })
     @POST
@@ -73,9 +81,10 @@ public class PrijavaVir {
         else return Response.status(500).build();
     }
 
-    @Operation(description = "Potrdi prijavo.", summary = "Prijava")
+    @Operation(description = "Potrdi obstoječo prijavo.", summary = "Potrdi prijavo")
     @APIResponses({
-            @APIResponse(responseCode = "200", description = "Prijava potrjena."),
+            @APIResponse(responseCode = "200", description = "Potrjena prijava.",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Prijava.class))}),
             @APIResponse(responseCode = "404", description = "Prijava ni najdena.")
     })
     @PUT

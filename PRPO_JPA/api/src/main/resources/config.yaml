@@ -8,4 +8,10 @@ kumuluzee:
       connection-url: jdbc:postgresql://localhost:5432/PRPO_JPA
       username: postgres
       password: postgres
+  openapi-mp:
+    enabled: true
+    servlet:
+      mapping: /openapi
+    ui:
+      mapping: /openapi/ui
 
