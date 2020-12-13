@@ -1,6 +1,7 @@
 package si.fri.prpo.govorilneure.api.v1.viri;
 
 import com.kumuluz.ee.rest.beans.QueryParameters;
+import com.kumuluz.ee.security.annotations.Secure;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.headers.Header;
@@ -15,6 +16,8 @@ import si.fri.prpo.govorilneure.entitete.Student;
 import si.fri.prpo.govorilneure.zrna.StudentZrno;
 import si.fri.prpo.govorilneure.zrna.UpravljanjeSestankovZrno;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -27,6 +30,7 @@ import java.util.List;
 @Path("studenti")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@Secure
 @ApplicationScoped
 public class StudentVir {
     @Context
@@ -44,6 +48,7 @@ public class StudentVir {
                     headers = {@Header(name = "X-Total-Count", description = "Število vrnjenih študentov.")})
     })
     @GET
+    @PermitAll
     public Response vrniStudente() {
         QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
         List<Student> studenti = szrno.getAll(query);
@@ -59,6 +64,7 @@ public class StudentVir {
     })
     @GET
     @Path("{id}")
+    @PermitAll
     public Response vrniStudenta(@Parameter(description = "ID študenta", required = true) @PathParam("id") int idStudenta) {
         Student student = szrno.getById(idStudenta);
         if(student != null) return Response.status(Response.Status.OK).entity(student).build();
@@ -74,6 +80,7 @@ public class StudentVir {
     })
     @POST
     @Consumes({"application/si.fri.prpo.govorilneure.entitete.Student+json"})
+    @RolesAllowed("admins")
     public Response dodajStudenta(@RequestBody(description = "Entiteta Študent", required = true) Student s) {
         StudentDto dto = new StudentDto(s.getIme(), s.getPriimek(), s.getEmail(), s.getStizkaznice());
         Student ret = szrno.getById(uszrno.dodajStudenta(dto).getId());

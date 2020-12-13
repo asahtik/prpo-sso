@@ -1,6 +1,7 @@
 package si.fri.prpo.govorilneure.api.v1.viri;
 
 import com.kumuluz.ee.rest.beans.QueryParameters;
+import com.kumuluz.ee.security.annotations.Secure;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.headers.Header;
@@ -15,6 +16,8 @@ import si.fri.prpo.govorilneure.entitete.Profesor;
 import si.fri.prpo.govorilneure.zrna.ProfesorZrno;
 import si.fri.prpo.govorilneure.zrna.UpravljanjeSestankovZrno;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -27,6 +30,7 @@ import java.util.List;
 @Path("profesorji")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@Secure
 @ApplicationScoped
 public class ProfesorVir {
     @Context
@@ -44,6 +48,7 @@ public class ProfesorVir {
                     headers = {@Header(name = "X-Total-Count", description = "Število vrnjenih profesorjev.")})
     })
     @GET
+    @PermitAll
     public Response vrniProfesorje() {
         QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
         List<Profesor> profesorji = profzrno.getAll(query);
@@ -59,6 +64,7 @@ public class ProfesorVir {
     })
     @GET
     @Path("{id}")
+    @PermitAll
     public Response vrniProfesorja(@Parameter(description = "ID profesorja", required = true) @PathParam("id") int idProfesorja) {
         Profesor profesor = profzrno.getById(idProfesorja);
         if(profesor != null) return Response.status(Response.Status.OK).entity(profesor).build();
@@ -74,6 +80,7 @@ public class ProfesorVir {
     })
     @POST
     @Consumes({"application/si.fri.prpo.govorilneure.entitete.Profesor+json"})
+    @RolesAllowed("admins")
     public Response dodajProfesorja(@RequestBody(description = "Entiteta Profesor", required = true) Profesor p) {
         Profesor ret = profzrno.getById(uszrno.dodajProfesorja(new ProfesorDto(p.getIme(), p.getPriimek(), p.getEmail())).getId());
         if(ret != null) return Response.status(Response.Status.OK).entity(ret).build();

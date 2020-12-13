@@ -1,6 +1,7 @@
 package si.fri.prpo.govorilneure.api.v1.viri;
 
 import com.kumuluz.ee.rest.beans.QueryParameters;
+import com.kumuluz.ee.security.annotations.Secure;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.headers.Header;
@@ -15,6 +16,8 @@ import si.fri.prpo.govorilneure.entitete.Prijava;
 import si.fri.prpo.govorilneure.zrna.PrijavaZrno;
 import si.fri.prpo.govorilneure.zrna.UpravljanjeSestankovZrno;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -27,6 +30,7 @@ import java.util.List;
 @Path("prijave")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@Secure
 @ApplicationScoped
 public class PrijavaVir {
     @Context
@@ -44,6 +48,7 @@ public class PrijavaVir {
                     headers = {@Header(name = "X-Total-Count", description = "Število vrnjenih prijav.")})
     })
     @GET // query params date format (ms or string)?
+    @PermitAll
     public Response vrniPrijave() {
         QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
         List<Prijava> prijave = prijzrno.getAll(query);
@@ -59,6 +64,7 @@ public class PrijavaVir {
     })
     @GET
     @Path("{id}")
+    @PermitAll
     public Response vrniPrijavo(@Parameter(description = "ID prijave", required = true) @PathParam("id") int idPrijave) {
         Prijava prijava = prijzrno.getById(idPrijave);
         if(prijava != null) return Response.status(Response.Status.OK).entity(prijava).build();
@@ -74,6 +80,7 @@ public class PrijavaVir {
     })
     @POST
     @Consumes({"application/si.fri.prpo.govorilneure.entitete.Prijava+json"})
+    @RolesAllowed("admins")
     public Response dodajPrijavo(@RequestBody(description = "Entiteta Prijava", required = true) Prijava p) {
         PrijavaDto dto = new PrijavaDto(0, p.getEmail(), p.getStudent().getId(), p.getTermin().getId());
         dto.setTime(System.currentTimeMillis());
@@ -91,6 +98,7 @@ public class PrijavaVir {
     })
     @PUT
     @Consumes({"application/si.fri.prpo.govorilneure.entitete.Prijava+json"})
+    @RolesAllowed("admins")
     public Response potrdiPrijavo(@RequestBody(description = "Entiteta Prijava", required = true) Prijava p) {
         PrijavaDto dto = new PrijavaDto(p.getId(), p.getTimestamp(), true, p.getEmail(), p.getStudent().getId(), p.getTermin().getId());
         Prijava ret = prijzrno.getById(uszrno.potrdiPrijavo(dto).getId());
