@@ -80,4 +80,15 @@ public class Student {
     public void setPrijave(List<Prijava> prijave) {
         this.prijave = prijave;
     }
+
+    public Student() {
+    }
+
+    public Student(Integer id, String ime, String priimek, String email, Integer stizkaznice) {
+        this.id = id;
+        this.ime = ime;
+        this.priimek = priimek;
+        this.email = email;
+        this.stizkaznice = stizkaznice;
+    }
 }

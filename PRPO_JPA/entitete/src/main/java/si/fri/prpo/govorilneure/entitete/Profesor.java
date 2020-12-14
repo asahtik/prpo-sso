@@ -66,4 +66,13 @@ public class Profesor {
         this.ime = ime;
     }
 
+    public Profesor() {
+    }
+
+    public Profesor(Integer id, String ime, String priimek, String email) {
+        this.id = id;
+        this.ime = ime;
+        this.priimek = priimek;
+        this.email = email;
+    }
 }

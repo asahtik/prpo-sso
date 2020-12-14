@@ -63,7 +63,8 @@ public class UpravljanjeSestankovZrno {
         p.setIme(profdto.getIme());
         p.setPriimek(profdto.getPriimek());
         p.setEmail(profdto.getEmail());
-        return new ProfesorDto(prof.add(p).getId());
+        prof.add(p);
+        return new ProfesorDto(p.getId(), p.getIme(), p.getPriimek(), p.getEmail());
     }
 
     public StudentDto dodajStudenta(StudentDto studdto) {
@@ -89,7 +90,8 @@ public class UpravljanjeSestankovZrno {
         s.setIme(studdto.getIme());
         s.setPriimek(studdto.getPriimek());
         s.setEmail(studdto.getEmail());
-        return new StudentDto(stud.add(s).getId());
+        stud.add(s);
+        return new StudentDto(s.getId(), s.getIme(), s.getPriimek(), s.getEmail(), s.getStizkaznice());
     }
 
     public TerminDto dodajTermin(TerminDto termdto) {
@@ -105,7 +107,7 @@ public class UpravljanjeSestankovZrno {
         t.setProfesor(p);
         t = term.add(t);
         p.getTermini().add(t);
-        return new TerminDto(t.getId());
+        return new TerminDto(t.getId(), t.getTimestamp(), t.getMaxSt(), t.getLocation(), t.getProfesor().getId());
     }
 
     public PrijavaDto dodajPrijavo(PrijavaDto prijDto){
@@ -131,7 +133,7 @@ public class UpravljanjeSestankovZrno {
         prijava = prij.add(prijava);
         student.getPrijave().add(prijava);
         termin.getPrijave().add(prijava);
-        return new PrijavaDto(prijava.getId());
+        return new PrijavaDto(prijava.getId(), prijava.getTimestamp(), false, prijava.getEmail(), prijava.getStudent().getId(), prijava.getTermin().getId());
     }
 
     public PrijavaDto potrdiPrijavo(PrijavaDto prijDto){
@@ -165,6 +167,6 @@ public class UpravljanjeSestankovZrno {
             }
         }
         prijava = prij.update(prijava.getId(), prijava);
-        return new PrijavaDto(prijava.getId());
+        return new PrijavaDto(prijava.getId(), prijava.getTimestamp(), prijava.getPotrjena(), prijava.getEmail(), prijava.getStudent().getId(), prijava.getTermin().getId());
     }
 }

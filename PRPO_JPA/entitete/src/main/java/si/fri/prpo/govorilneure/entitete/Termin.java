@@ -92,5 +92,16 @@ public class Termin {
                 ", prijave=" + prijave +
                 '}';
     }
+
+    public Termin() {
+    }
+
+    public Termin(Integer id, long timestamp, int maxSt, String location, Profesor profesor) {
+        this.id = id;
+        this.timestamp = timestamp;
+        this.maxSt = maxSt;
+        this.location = location;
+        this.profesor = profesor;
+    }
 }
 

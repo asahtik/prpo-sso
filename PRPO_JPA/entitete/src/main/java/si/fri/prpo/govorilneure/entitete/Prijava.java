@@ -92,4 +92,16 @@ public class Prijava {
                 ", student=" + student.getId() +
                 '}';
     }
+
+    public Prijava() {
+    }
+
+    public Prijava(Integer id, long timestamp, Boolean potrjena, String email, Termin termin, Student student) {
+        this.id = id;
+        this.timestamp = timestamp;
+        this.potrjena = potrjena;
+        this.email = email;
+        this.termin = termin;
+        this.student = student;
+    }
 }
