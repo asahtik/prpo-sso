@@ -4,7 +4,6 @@ import com.kumuluz.ee.rest.beans.QueryParameters;
 import com.kumuluz.ee.rest.utils.JPAUtils;
 import si.fri.prpo.govorilneure.anotacije.BeleziKlice;
 import si.fri.prpo.govorilneure.entitete.Profesor;
-import si.fri.prpo.govorilneure.entitete.Termin;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;

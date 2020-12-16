@@ -5,14 +5,13 @@ import si.fri.prpo.govorilneure.dtos.PrijavaDto;
 import si.fri.prpo.govorilneure.dtos.ProfesorDto;
 import si.fri.prpo.govorilneure.dtos.StudentDto;
 import si.fri.prpo.govorilneure.dtos.TerminDto;
-import si.fri.prpo.govorilneure.entitete.Student;
 import si.fri.prpo.govorilneure.izjeme.NeveljavenDtoIzjema;
 
-import java.util.logging.Logger;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 import java.util.HashMap;
+import java.util.logging.Logger;
 
 @Interceptor
 @BeleziKlice

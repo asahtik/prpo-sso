@@ -3,8 +3,6 @@ package si.fri.prpo.govorilneure.entitete;
 import si.fri.prpo.govorilneure.pretvorniki.TStoString;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.List;
 
 @Entity
 @NamedQueries(value =

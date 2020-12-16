@@ -17,11 +17,11 @@ kumuluzee:
   security:
     keycloak:
       json: '{
-              "realm": "master",
-              "bearer-only": true,
-              "auth-server-url": "http://localhost:8082/auth",
-              "ssl-required": "external",
-              "resource": "customers-api",
-              "confidential-port": 0
-          }'
+               "realm": "upravljanje_sestankov",
+               "bearer-only": true,
+               "auth-server-url": "http://localhost:8082/auth/",
+               "ssl-required": "external",
+               "resource": "sestanki-api",
+               "confidential-port": 0
+             }'
 

@@ -1,17 +1,15 @@
 package si.fri.prpo.govorilneure.zrna;
+
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import com.kumuluz.ee.rest.utils.JPAUtils;
 import si.fri.prpo.govorilneure.anotacije.BeleziKlice;
-import si.fri.prpo.govorilneure.entitete.Profesor;
 import si.fri.prpo.govorilneure.entitete.Student;
-import si.fri.prpo.govorilneure.entitete.Termin;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;

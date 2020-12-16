@@ -12,7 +12,6 @@ import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import si.fri.prpo.govorilneure.dtos.TerminDto;
-import si.fri.prpo.govorilneure.entitete.Student;
 import si.fri.prpo.govorilneure.entitete.Termin;
 import si.fri.prpo.govorilneure.zrna.TerminZrno;
 import si.fri.prpo.govorilneure.zrna.UpravljanjeSestankovZrno;

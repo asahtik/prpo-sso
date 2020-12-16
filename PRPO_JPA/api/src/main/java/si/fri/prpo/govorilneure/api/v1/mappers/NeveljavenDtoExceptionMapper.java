@@ -1,8 +1,8 @@
 package si.fri.prpo.govorilneure.api.v1.mappers;
 
-import javax.ws.rs.core.Response;
 import si.fri.prpo.govorilneure.izjeme.NeveljavenDtoIzjema;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
