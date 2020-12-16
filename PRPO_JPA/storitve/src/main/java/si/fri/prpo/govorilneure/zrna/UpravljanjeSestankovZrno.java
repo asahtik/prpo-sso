@@ -1,5 +1,6 @@
 package si.fri.prpo.govorilneure.zrna;
 
+import com.kumuluz.ee.configuration.utils.ConfigurationUtil;
 import si.fri.prpo.govorilneure.anotacije.BeleziKlice;
 import si.fri.prpo.govorilneure.dtos.PrijavaDto;
 import si.fri.prpo.govorilneure.dtos.ProfesorDto;
@@ -14,6 +15,14 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.ws.rs.InternalServerErrorException;
+import javax.ws.rs.ProcessingException;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.MediaType;
+import java.lang.module.Configuration;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -22,12 +31,21 @@ import java.util.regex.Pattern;
 @ApplicationScoped
 @BeleziKlice
 public class UpravljanjeSestankovZrno {
+    @Inject
+    private Client httpClient;
+    private String baseUrl;
 
     private static final Logger log = Logger.getLogger(UpravljanjeSestankovZrno.class.getName());
 
     @PostConstruct
     private void postConstruct() {
         log.info("Created "+UpravljanjeSestankovZrno.class.getName()+" instance!");
+
+        httpClient = ClientBuilder.newClient();
+        baseUrl = ConfigurationUtil.getInstance()
+                .get("integrations.kanali.base-url")
+                .orElse("http://localhost:8081/v1");
+
     }
     @PreDestroy
     private void preDestroy() {
@@ -43,6 +61,7 @@ public class UpravljanjeSestankovZrno {
     private StudentZrno stud;
     @Inject
     private PrijavaZrno prij;
+
 
     public ProfesorDto dodajProfesorja(ProfesorDto profdto) {
         // Ime in priimek obvezna
@@ -107,6 +126,10 @@ public class UpravljanjeSestankovZrno {
         t.setProfesor(p);
         t = term.add(t);
         p.getTermini().add(t);
+
+
+        pokliciKanal(t.getLocation());
+        
         return new TerminDto(t.getId(), t.getTimestamp(), t.getMaxSt(), t.getLocation(), t.getProfesor().getId());
     }
 
@@ -168,5 +191,17 @@ public class UpravljanjeSestankovZrno {
         }
         prijava = prij.update(prijava.getId(), prijava);
         return new PrijavaDto(prijava.getId(), prijava.getTimestamp(), prijava.getPotrjena(), prijava.getEmail(), prijava.getStudent().getId(), prijava.getTermin().getId());
+    }
+
+    private void pokliciKanal(int lokacija){
+        try {
+            httpClient
+                    .target(baseUrl + "/kanali/" + String.valueOf(lokacija) + "/")
+                    .request(MediaType.APPLICATION_JSON)
+                    .get();
+        } catch (WebApplicationException | ProcessingException e) {
+                log.severe(e.getMessage());
+                throw new InternalServerErrorException(e);
+        }
     }
 }

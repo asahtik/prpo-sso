@@ -24,4 +24,7 @@ kumuluzee:
                "resource": "sestanki-api",
                "confidential-port": 0
              }'
+integrations:
+      kanali:
+        base-url: http://localhost:8081/v1
 
