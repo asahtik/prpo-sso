@@ -1,9 +1,9 @@
 package si.fri.prpo.govorilneure.entitete;
+
 import si.fri.prpo.govorilneure.pretvorniki.TStoString;
 
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
@@ -23,7 +23,7 @@ public class Termin {
     @Column
     private int maxSt;
     @Column
-    private String location;
+    private int location;
 
     @ManyToOne
     @JoinColumn(name = "profesor_id")
@@ -49,11 +49,11 @@ public class Termin {
         this.timestamp = timestamp;
     }
 
-    public String getLocation() {
+    public int getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
+    public void setLocation(int location) {
         this.location = location;
     }
 
@@ -96,7 +96,7 @@ public class Termin {
     public Termin() {
     }
 
-    public Termin(Integer id, long timestamp, int maxSt, String location, Profesor profesor) {
+    public Termin(Integer id, long timestamp, int maxSt, int location, Profesor profesor) {
         this.id = id;
         this.timestamp = timestamp;
         this.maxSt = maxSt;

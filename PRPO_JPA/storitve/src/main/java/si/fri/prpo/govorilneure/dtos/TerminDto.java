@@ -5,10 +5,10 @@ public class TerminDto {
     private int id;
     private long time;
     private int maxSt;
-    private String lokacija;
+    private int lokacija = 0;
     private int profesor_id;
 
-    public TerminDto(int id, long time, int maxSt, String lokacija, int profesor_id) {
+    public TerminDto(int id, long time, int maxSt, int lokacija, int profesor_id) {
         this.id = id;
         this.time = time;
         this.maxSt = maxSt;
@@ -16,7 +16,7 @@ public class TerminDto {
         this.profesor_id = profesor_id;
     }
 
-    public TerminDto(long time, int maxSt, String lokacija, int profesor_id) {
+    public TerminDto(long time, int maxSt, int lokacija, int profesor_id) {
         this.time = time;
         this.maxSt = maxSt;
         this.lokacija = lokacija;
@@ -51,11 +51,11 @@ public class TerminDto {
         this.maxSt = maxSt;
     }
 
-    public String getLokacija() {
+    public int getLokacija() {
         return lokacija;
     }
 
-    public void setLokacija(String lokacija) {
+    public void setLokacija(int lokacija) {
         this.lokacija = lokacija;
     }
 

@@ -71,7 +71,7 @@ public class BelezenjeKlicevInterceptor {
                 }
                 else if(context.getParameters()[0] instanceof TerminDto) {
                     TerminDto termin = (TerminDto) context.getParameters()[0];
-                    if(termin.getLokacija() == null || termin.getLokacija().isEmpty() ||
+                    if(termin.getLokacija() == 0 ||
                             termin.getMaxSt() == 0) {
 
                         String msg = "Podan Termin ne vsebuje podatka o lokaciji ali pa je max število udeležncev premajhno)";

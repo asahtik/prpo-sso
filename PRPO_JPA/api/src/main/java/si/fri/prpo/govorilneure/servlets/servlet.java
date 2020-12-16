@@ -40,9 +40,9 @@ public class servlet extends HttpServlet {
         upravljanjeSestankovZrno.dodajProfesorja(new ProfesorDto("Senor", "Carlos", "SC@gmail.com"));
         upravljanjeSestankovZrno.dodajStudenta(new StudentDto("Jaka", "Adut", "don@don.com", 63180144));
         upravljanjeSestankovZrno.dodajStudenta(new StudentDto("Janez", "Bidet", "jan@gmail.com", 63180144));
-        upravljanjeSestankovZrno.dodajTermin(new TerminDto(Timestamp.valueOf("2020-11-11 13:00:00.0").getTime(),6,"Ljubljana",1));
-        upravljanjeSestankovZrno.dodajTermin(new TerminDto(Timestamp.valueOf("2020-11-11 15:00:00.0").getTime(),6,"Ljubljana",1));
-        upravljanjeSestankovZrno.dodajTermin(new TerminDto(Timestamp.valueOf("2020-11-12 13:30:00.0").getTime(),6,"Ljubljana",2));
+        upravljanjeSestankovZrno.dodajTermin(new TerminDto(Timestamp.valueOf("2020-11-11 13:00:00.0").getTime(),6,1,1));
+        upravljanjeSestankovZrno.dodajTermin(new TerminDto(Timestamp.valueOf("2020-11-11 15:00:00.0").getTime(),6,1,1));
+        upravljanjeSestankovZrno.dodajTermin(new TerminDto(Timestamp.valueOf("2020-11-12 13:30:00.0").getTime(),6,1,2));
         upravljanjeSestankovZrno.dodajPrijavo(new PrijavaDto(System.currentTimeMillis(), "teams@teams.com", 1, 1));
         upravljanjeSestankovZrno.dodajPrijavo(new PrijavaDto(System.currentTimeMillis(), "teams@teams.com", 1, 2));
         upravljanjeSestankovZrno.dodajPrijavo(new PrijavaDto(System.currentTimeMillis(), "teams2@teams2.com", 2, 3));
