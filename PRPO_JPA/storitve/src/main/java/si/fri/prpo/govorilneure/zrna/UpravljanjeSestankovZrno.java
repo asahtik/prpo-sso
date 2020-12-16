@@ -129,7 +129,7 @@ public class UpravljanjeSestankovZrno {
 
 
         pokliciKanal(t.getLocation());
-        
+
         return new TerminDto(t.getId(), t.getTimestamp(), t.getMaxSt(), t.getLocation(), t.getProfesor().getId());
     }
 
