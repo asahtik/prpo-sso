@@ -2,10 +2,7 @@ package si.fri.prpo.govorilneure.zrna;
 
 import com.kumuluz.ee.configuration.utils.ConfigurationUtil;
 import si.fri.prpo.govorilneure.anotacije.BeleziKlice;
-import si.fri.prpo.govorilneure.dtos.PrijavaDto;
-import si.fri.prpo.govorilneure.dtos.ProfesorDto;
-import si.fri.prpo.govorilneure.dtos.StudentDto;
-import si.fri.prpo.govorilneure.dtos.TerminDto;
+import si.fri.prpo.govorilneure.dtos.*;
 import si.fri.prpo.govorilneure.entitete.Prijava;
 import si.fri.prpo.govorilneure.entitete.Profesor;
 import si.fri.prpo.govorilneure.entitete.Student;
@@ -22,7 +19,6 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
-import java.lang.module.Configuration;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -31,7 +27,7 @@ import java.util.regex.Pattern;
 @ApplicationScoped
 @BeleziKlice
 public class UpravljanjeSestankovZrno {
-    @Inject
+
     private Client httpClient;
     private String baseUrl;
 
@@ -128,7 +124,7 @@ public class UpravljanjeSestankovZrno {
         p.getTermini().add(t);
 
 
-        pokliciKanal(t.getLocation());
+        pokliciKanal(t.getLocation(), t.getId());
 
         return new TerminDto(t.getId(), t.getTimestamp(), t.getMaxSt(), t.getLocation(), t.getProfesor().getId());
     }
@@ -193,12 +189,12 @@ public class UpravljanjeSestankovZrno {
         return new PrijavaDto(prijava.getId(), prijava.getTimestamp(), prijava.getPotrjena(), prijava.getEmail(), prijava.getStudent().getId(), prijava.getTermin().getId());
     }
 
-    private void pokliciKanal(int lokacija){
+    private void pokliciKanal(int lokacija, int id){
         try {
             httpClient
-                    .target(baseUrl + "/kanali/" + String.valueOf(lokacija) + "/")
+                    .target(baseUrl + "/kanali/" + String.valueOf(lokacija))
                     .request(MediaType.APPLICATION_JSON)
-                    .get();
+                    .put(Entity.json(new KanalDto(lokacija, id)));
         } catch (WebApplicationException | ProcessingException e) {
                 log.severe(e.getMessage());
                 throw new InternalServerErrorException(e);

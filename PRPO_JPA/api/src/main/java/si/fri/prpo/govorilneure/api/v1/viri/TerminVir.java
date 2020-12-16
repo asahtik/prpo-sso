@@ -80,7 +80,8 @@ public class TerminVir {
     })
     @POST
     @Consumes({"application/si.fri.prpo.govorilneure.entitete.Termin+json"})
-    @RolesAllowed("admin")
+    //@RolesAllowed("admin")
+    @PermitAll
     public Response dodajTermin(@RequestBody(description = "Entiteta Termin", required = true) Termin t) {
         TerminDto dto = new TerminDto(t.getTimestamp(), t.getMaxSt(), t.getLocation(), t.getProfesor().getId());
         Termin ret = tzrno.getById(uszrno.dodajTermin(dto).getId());

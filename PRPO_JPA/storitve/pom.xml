@@ -20,6 +20,10 @@
             <artifactId>kumuluzee-jta-narayana</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.kumuluz.ee</groupId>
+            <artifactId>kumuluzee-jax-rs-jersey</artifactId>
+        </dependency>
+        <dependency>
             <groupId>si.fri.prpo.govorilneure</groupId>
             <artifactId>entitete</artifactId>
         </dependency>
