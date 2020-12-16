@@ -80,7 +80,7 @@ public class ProfesorVir {
     })
     @POST
     @Consumes({"application/si.fri.prpo.govorilneure.entitete.Profesor+json"})
-    @RolesAllowed("admins")
+    @RolesAllowed("admin")
     public Response dodajProfesorja(@RequestBody(description = "Entiteta Profesor", required = true) Profesor p) {
         Profesor ret = profzrno.getById(uszrno.dodajProfesorja(new ProfesorDto(p.getIme(), p.getPriimek(), p.getEmail())).getId());
         if(ret != null) return Response.status(Response.Status.OK).entity(ret).build();

@@ -9,7 +9,7 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
 @OpenAPIDefinition(info = @Info(title = "Upravljanje sestankov API", version = "v1"), servers = @Server(url = "http://localhost:8080/"))
-@DeclareRoles({"user", "admin"})
+@DeclareRoles({"admin", "user"})
 @ApplicationPath("/v1")
 public class UpravljanjeSestankovApp extends Application {
 

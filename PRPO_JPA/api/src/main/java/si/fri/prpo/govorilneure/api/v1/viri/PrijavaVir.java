@@ -80,7 +80,7 @@ public class PrijavaVir {
     })
     @POST
     @Consumes({"application/si.fri.prpo.govorilneure.entitete.Prijava+json"})
-    @RolesAllowed("admins")
+    @RolesAllowed({"user", "admin"})
     public Response dodajPrijavo(@RequestBody(description = "Entiteta Prijava", required = true) Prijava p) {
         PrijavaDto dto = new PrijavaDto(0, p.getEmail(), p.getStudent().getId(), p.getTermin().getId());
         dto.setTime(System.currentTimeMillis());
@@ -98,7 +98,7 @@ public class PrijavaVir {
     })
     @PUT
     @Consumes({"application/si.fri.prpo.govorilneure.entitete.Prijava+json"})
-    @RolesAllowed("admins")
+    @RolesAllowed("admin")
     public Response potrdiPrijavo(@RequestBody(description = "Entiteta Prijava", required = true) Prijava p) {
         PrijavaDto dto = new PrijavaDto(p.getId(), p.getTimestamp(), true, p.getEmail(), p.getStudent().getId(), p.getTermin().getId());
         Prijava ret = prijzrno.getById(uszrno.potrdiPrijavo(dto).getId());

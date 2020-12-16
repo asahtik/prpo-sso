@@ -80,7 +80,7 @@ public class StudentVir {
     })
     @POST
     @Consumes({"application/si.fri.prpo.govorilneure.entitete.Student+json"})
-    @RolesAllowed("admins")
+    @RolesAllowed("admin")
     public Response dodajStudenta(@RequestBody(description = "Entiteta Študent", required = true) Student s) {
         StudentDto dto = new StudentDto(s.getIme(), s.getPriimek(), s.getEmail(), s.getStizkaznice());
         Student ret = szrno.getById(uszrno.dodajStudenta(dto).getId());
