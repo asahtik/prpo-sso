@@ -84,7 +84,9 @@ public class TerminVir {
     public Response dodajTermin(@RequestBody(description = "Entiteta Termin", required = true) Termin t) {
         TerminDto dto = new TerminDto(t.getTimestamp(), t.getMaxSt(), t.getLocation(), t.getProfesor().getId());
         Termin ret = tzrno.getById(uszrno.dodajTermin(dto).getId());
-        if(ret != null) return Response.status(Response.Status.OK).entity(ret).build();
+        if(ret != null) {
+            return Response.status(Response.Status.OK).entity(ret).build();
+        }
         else return Response.status(500).build();
     }
 }
