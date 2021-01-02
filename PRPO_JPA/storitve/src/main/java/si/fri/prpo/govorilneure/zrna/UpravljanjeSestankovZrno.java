@@ -7,6 +7,7 @@ import si.fri.prpo.govorilneure.entitete.Prijava;
 import si.fri.prpo.govorilneure.entitete.Profesor;
 import si.fri.prpo.govorilneure.entitete.Student;
 import si.fri.prpo.govorilneure.entitete.Termin;
+import si.fri.prpo.govorilneure.odjemalci.CheckEmailOdjemalec;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -96,9 +97,10 @@ public class UpravljanjeSestankovZrno {
             return null;
         }
         if(studdto.getEmail() != null) {
-            Pattern pattern = Pattern.compile("^.+@.+\\..+$", Pattern.CASE_INSENSITIVE);
+            if(!CheckEmailOdjemalec.ustrezenEmail(studdto.getEmail())) return null;
+            /*Pattern pattern = Pattern.compile("^.+@.+\\..+$", Pattern.CASE_INSENSITIVE);
             Matcher matcher = pattern.matcher(studdto.getEmail());
-            if (!matcher.find()) studdto.setEmail(null);
+            if (!matcher.find()) studdto.setEmail(null);*/
         }
 
         Student s = new Student();

@@ -1,5 +1,6 @@
 package si.fri.prpo.govorilneure.api.v1.viri;
 
+import com.kumuluz.ee.cors.annotations.CrossOrigin;
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import com.kumuluz.ee.security.annotations.Secure;
 import org.eclipse.microprofile.openapi.annotations.Operation;
@@ -32,6 +33,7 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 @Secure
 @ApplicationScoped
+@CrossOrigin(allowOrigin = "http://localhost:4200", supportedMethods = "GET,POST")
 public class TerminVir {
     @Context
     protected UriInfo uriInfo;
