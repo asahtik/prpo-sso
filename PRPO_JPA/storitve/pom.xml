@@ -27,6 +27,11 @@
             <groupId>si.fri.prpo.govorilneure</groupId>
             <artifactId>entitete</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>4.10.0-RC1</version>
+        </dependency>
     </dependencies>
 
 

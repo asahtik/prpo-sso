@@ -7,6 +7,7 @@ import si.fri.prpo.govorilneure.entitete.Prijava;
 import si.fri.prpo.govorilneure.entitete.Profesor;
 import si.fri.prpo.govorilneure.entitete.Student;
 import si.fri.prpo.govorilneure.entitete.Termin;
+import si.fri.prpo.govorilneure.odjemalci.CheckEmailOdjemalec;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -59,8 +60,8 @@ public class UpravljanjeSestankovZrno {
     private PrijavaZrno prij;
 
 
+
     public ProfesorDto dodajProfesorja(ProfesorDto profdto) {
-        // Ime in priimek obvezna
         profdto.setIme(profdto.getIme().trim());
         profdto.setPriimek(profdto.getPriimek().trim());
 
@@ -69,9 +70,7 @@ public class UpravljanjeSestankovZrno {
             return null;
         }
         if(profdto.getEmail() != null) {
-            Pattern pattern = Pattern.compile("^.+@.+\\..+$", Pattern.CASE_INSENSITIVE);
-            Matcher matcher = pattern.matcher(profdto.getEmail());
-            if (!matcher.find()) profdto.setEmail(null);
+            if(!CheckEmailOdjemalec.ustrezenEmail(profdto.getEmail())) return null;
         }
 
         Profesor p = new Profesor();
@@ -99,6 +98,7 @@ public class UpravljanjeSestankovZrno {
             Pattern pattern = Pattern.compile("^.+@.+\\..+$", Pattern.CASE_INSENSITIVE);
             Matcher matcher = pattern.matcher(studdto.getEmail());
             if (!matcher.find()) studdto.setEmail(null);
+            if(!CheckEmailOdjemalec.ustrezenEmail(studdto.getEmail())) return null;
         }
 
         Student s = new Student();

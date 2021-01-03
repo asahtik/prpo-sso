@@ -27,6 +27,7 @@
         <postresql.version>42.2.18</postresql.version>
         <kumuluzee-security.version>1.2.0</kumuluzee-security.version>
         <keycloak.version>11.0.3</keycloak.version>
+        <kumuluzee-health.version>2.4.0</kumuluzee-health.version>
     </properties>
 
     <dependencyManagement>
@@ -95,6 +96,16 @@
                 <groupId>si.fri.prpo.govorilneure</groupId>
                 <artifactId>entitete</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>4.10.0-RC1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee.health</groupId>
+                <artifactId>kumuluzee-health</artifactId>
+                <version>${kumuluzee-health.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
