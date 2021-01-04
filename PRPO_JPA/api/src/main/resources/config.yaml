@@ -35,4 +35,6 @@ kumuluzee:
 integrations:
       kanali:
         base-url: http://localhost:8081/v1
+      odjemalci:
+        email-check: https://metropolis-api-email.p.rapidapi.com/analysis
 

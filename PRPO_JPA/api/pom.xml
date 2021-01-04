@@ -55,6 +55,10 @@
             <version>${kumuluzee-health.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.kumuluz.ee.cors</groupId>
+            <artifactId>kumuluzee-cors</artifactId>
+        </dependency>
+        <dependency>
             <groupId>si.fri.prpo.govorilneure</groupId>
             <artifactId>storitve</artifactId>
         </dependency>

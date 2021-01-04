@@ -1,17 +1,22 @@
 package si.fri.prpo.govorilneure.odjemalci;
 
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+
+
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.WebApplicationException;
+
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+
 import java.util.logging.Logger;
 
 @ApplicationScoped
@@ -19,9 +24,11 @@ public class CheckEmailOdjemalec {
 
     private static Logger log = Logger.getLogger(CheckEmailOdjemalec.class.getName());
 
+
     static  Response response;
     static String istrue;
     static String url;
+
 
     @PostConstruct
     private void postConstruct() {
@@ -53,4 +60,6 @@ public class CheckEmailOdjemalec {
         System.out.println(istrue);
         return istrue.contains("true");
     }
+
+
 }

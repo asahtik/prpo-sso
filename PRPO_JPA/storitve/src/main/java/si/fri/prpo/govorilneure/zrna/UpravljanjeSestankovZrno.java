@@ -95,9 +95,6 @@ public class UpravljanjeSestankovZrno {
             return null;
         }
         if(studdto.getEmail() != null) {
-            Pattern pattern = Pattern.compile("^.+@.+\\..+$", Pattern.CASE_INSENSITIVE);
-            Matcher matcher = pattern.matcher(studdto.getEmail());
-            if (!matcher.find()) studdto.setEmail(null);
             if(!CheckEmailOdjemalec.ustrezenEmail(studdto.getEmail())) return null;
         }
 

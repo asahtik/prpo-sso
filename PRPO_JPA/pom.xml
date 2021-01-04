@@ -26,6 +26,7 @@
         <kumuluzee-config.version>1.4.0</kumuluzee-config.version>
         <postresql.version>42.2.18</postresql.version>
         <kumuluzee-security.version>1.2.0</kumuluzee-security.version>
+        <kumuluzee-cors.version>1.0.6</kumuluzee-cors.version>
         <keycloak.version>11.0.3</keycloak.version>
         <kumuluzee-health.version>2.3.0</kumuluzee-health.version>
     </properties>
@@ -76,6 +77,11 @@
                 <groupId>com.kumuluz.ee.security</groupId>
                 <artifactId>kumuluzee-security-keycloak</artifactId>
                 <version>${kumuluzee-security.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee.cors</groupId>
+                <artifactId>kumuluzee-cors</artifactId>
+                <version>${kumuluzee-cors.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.keycloak</groupId>
