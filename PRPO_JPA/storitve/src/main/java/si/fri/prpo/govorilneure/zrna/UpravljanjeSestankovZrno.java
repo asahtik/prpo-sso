@@ -191,6 +191,22 @@ public class UpravljanjeSestankovZrno {
         return new PrijavaDto(prijava.getId(), prijava.getTimestamp(), prijava.getPotrjena(), prijava.getEmail(), prijava.getStudent().getId(), prijava.getTermin().getId());
     }
 
+    public boolean izbrisiPrijavo(int id) {
+        Prijava prijava = prij.getById(id);
+        if(prijava == null){
+            log.info("Id prijave neveljaven!");
+            return false;
+        }
+        Termin termin = prijava.getTermin();
+        Student student = prijava.getStudent();
+        boolean b = removePrijavaFromList(student.getPrijave(), id);
+        if(!b) return false;
+        b = removePrijavaFromList(termin.getPrijave(), id);
+        if(!b) return false;
+        prij.delete(id);
+        return true;
+    }
+
     private void pokliciKanal(int lokacija, int id){
         try {
             httpClient
@@ -201,5 +217,14 @@ public class UpravljanjeSestankovZrno {
                 log.severe(e.getMessage());
                 throw new InternalServerErrorException(e);
         }
+    }
+
+    private boolean removePrijavaFromList(List<Prijava> l, int id) {
+        for(int i=0; i<l.size(); i++)
+            if(l.get(i).getId() == id) {
+                l.remove(i);
+                return true;
+            }
+        return false;
     }
 }

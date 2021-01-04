@@ -31,7 +31,6 @@ import java.util.List;
 @Path("studenti")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@Secure
 @ApplicationScoped
 @CrossOrigin(allowOrigin = "http://localhost:4200", supportedMethods = "GET,POST")
 public class StudentVir {
@@ -50,7 +49,6 @@ public class StudentVir {
                     headers = {@Header(name = "X-Total-Count", description = "Število vrnjenih študentov.")})
     })
     @GET
-    @PermitAll
     public Response vrniStudente() {
         QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
         List<Student> studenti = szrno.getAll(query);

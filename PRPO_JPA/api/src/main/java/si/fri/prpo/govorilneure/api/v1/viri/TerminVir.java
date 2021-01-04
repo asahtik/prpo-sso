@@ -31,7 +31,6 @@ import java.util.List;
 @Path("termini")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@Secure
 @ApplicationScoped
 @CrossOrigin(allowOrigin = "http://localhost:4200", supportedMethods = "GET,POST")
 public class TerminVir {
@@ -50,7 +49,6 @@ public class TerminVir {
                     headers = {@Header(name = "X-Total-Count", description = "Število vrnjenih terminov.")})
     })
     @GET
-    @PermitAll
     public Response vrniTermine() {
         QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
         List<Termin> termini = tzrno.getAll(query);
@@ -66,7 +64,6 @@ public class TerminVir {
     })
     @GET
     @Path("{id}")
-    @PermitAll
     public Response vrniTermin(@Parameter(description = "ID termina", required = true) @PathParam("id") int idTermina) {
         Termin termin = tzrno.getById(idTermina);
         if(termin != null) return Response.status(Response.Status.OK).entity(termin).build();

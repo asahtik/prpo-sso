@@ -31,9 +31,8 @@ import java.util.List;
 @Path("prijave")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@Secure
 @ApplicationScoped
-@CrossOrigin(allowOrigin = "http://localhost:4200", supportedMethods = "GET,POST,PUT")
+@CrossOrigin(allowOrigin = "http://localhost:4200", supportedMethods = "GET,POST,PUT,DELETE")
 public class PrijavaVir {
     @Context
     protected UriInfo uriInfo;
@@ -50,7 +49,6 @@ public class PrijavaVir {
                     headers = {@Header(name = "X-Total-Count", description = "Število vrnjenih prijav.")})
     })
     @GET // query params date format (ms or string)?
-    @PermitAll
     public Response vrniPrijave() {
         QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
         List<Prijava> prijave = prijzrno.getAll(query);
@@ -66,7 +64,6 @@ public class PrijavaVir {
     })
     @GET
     @Path("{id}")
-    @PermitAll
     public Response vrniPrijavo(@Parameter(description = "ID prijave", required = true) @PathParam("id") int idPrijave) {
         Prijava prijava = prijzrno.getById(idPrijave);
         if(prijava != null) return Response.status(Response.Status.OK).entity(prijava).build();
@@ -82,7 +79,6 @@ public class PrijavaVir {
     })
     @POST
     @Consumes({"application/si.fri.prpo.govorilneure.entitete.Prijava+json"})
-    @RolesAllowed({"user", "admin"})
     public Response dodajPrijavo(@RequestBody(description = "Entiteta Prijava", required = true) Prijava p) {
         PrijavaDto dto = new PrijavaDto(0, p.getEmail(), p.getStudent().getId(), p.getTermin().getId());
         dto.setTime(System.currentTimeMillis());
@@ -100,11 +96,24 @@ public class PrijavaVir {
     })
     @PUT
     @Consumes({"application/si.fri.prpo.govorilneure.entitete.Prijava+json"})
-    @RolesAllowed("admin")
     public Response potrdiPrijavo(@RequestBody(description = "Entiteta Prijava", required = true) Prijava p) {
         PrijavaDto dto = new PrijavaDto(p.getId(), p.getTimestamp(), true, p.getEmail(), p.getStudent().getId(), p.getTermin().getId());
         Prijava ret = prijzrno.getById(uszrno.potrdiPrijavo(dto).getId());
         if (ret != null) return Response.status(Response.Status.OK).entity(ret).build();
+        else return Response.status(404).build();
+    }
+
+    @Operation(description = "Izbrise prijavo.", summary = "Izbrisi prijavo")
+    @APIResponses({
+            @APIResponse(responseCode = "204", description = "Izbrisana prijava.",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Prijava.class))}),
+            @APIResponse(responseCode = "404", description = "Prijava ni najdena.")
+    })
+    @DELETE
+    @Path("{id}")
+    public Response izbrisiPrijavo(@Parameter(description = "ID prijave", required = true) @PathParam("id") int idPrijave) {
+        boolean done = uszrno.izbrisiPrijavo(idPrijave);
+        if (done) return Response.status(204).build();
         else return Response.status(404).build();
     }
 }
