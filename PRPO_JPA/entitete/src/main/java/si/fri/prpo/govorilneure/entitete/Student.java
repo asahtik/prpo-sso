@@ -25,7 +25,7 @@ public class Student {
     @Column
     private String email;
     @Column
-    private Integer stizkaznice;
+    private int stizkaznice;
 
     @JsonbTransient
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
@@ -64,7 +64,7 @@ public class Student {
         this.ime = ime;
     }
 
-    public Integer getStizkaznice() {
+    public int getStizkaznice() {
         return stizkaznice;
     }
 
@@ -83,7 +83,7 @@ public class Student {
     public Student() {
     }
 
-    public Student(Integer id, String ime, String priimek, String email, Integer stizkaznice) {
+    public Student(Integer id, String ime, String priimek, String email, int stizkaznice) {
         this.id = id;
         this.ime = ime;
         this.priimek = priimek;
