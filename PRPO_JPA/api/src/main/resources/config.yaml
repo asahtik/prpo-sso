@@ -29,6 +29,8 @@ kumuluzee:
       data-source-health-check:
         type: liveness
         jndi-name: jdbc/Simple_JPA
+      disk-space-health-check:
+        threshold: 100000000
 
 integrations:
       kanali:
